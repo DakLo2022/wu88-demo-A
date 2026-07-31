@@ -1,0 +1,262 @@
+.page {
+  min-height: 100vh;
+  background: #f4f4f5;
+  color: #1a1a1a;
+  padding: 24px 24px 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #555;
+  max-width: 900px;
+}
+
+.tabBar {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+}
+
+.tabBtn,
+.tabBtnActive {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tabBtnActive {
+  background: #f5820c;
+  border-color: #f5820c;
+  color: #fff;
+  font-weight: 600;
+}
+
+.tabBtnCount {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 11px;
+}
+
+.tabBtnActive .tabBtnCount {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.section {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: #333;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.deviceTabBar {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.deviceTabBtn,
+.deviceTabBtnActive {
+  flex: 1;
+  padding: 6px 0;
+  font-size: 12px;
+  border: none;
+  background: #fafafa;
+  cursor: pointer;
+  color: #666;
+}
+
+.deviceTabBtnActive {
+  background: #fff;
+  color: #f5820c;
+  font-weight: 700;
+  box-shadow: inset 0 -2px 0 #f5820c;
+}
+
+.previewWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: repeating-conic-gradient(#eee 0% 25%, #fafafa 0% 50%) 50% / 16px 16px;
+}
+
+.previewImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.previewPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #fff;
+}
+
+.info {
+  padding: 10px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.slotLabel {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.slotId {
+  font-size: 11px;
+  color: #999;
+}
+
+.slotMeta {
+  font-size: 11px;
+  color: #999;
+}
+
+.slotStatus {
+  font-size: 11px;
+  color: #666;
+}
+
+.statusUploading {
+  font-size: 11px;
+  color: #b8860b;
+}
+
+.statusSuccess {
+  font-size: 11px;
+  color: #1a8a4a;
+}
+
+.statusError {
+  font-size: 11px;
+  color: #c0392b;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadBtn {
+  margin-top: 4px;
+  border: 1px solid #f5820c;
+  background: #fff;
+  color: #f5820c;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.uploadBtn:hover {
+  background: #fff4ea;
+}
+
+.resetPositionBtn {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #666;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.positionEditor {
+  margin-top: 8px;
+  border-top: 1px dashed #eee;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.positionHint {
+  font-size: 10.5px;
+  color: #999;
+  line-height: 1.5;
+}
+
+.scaleRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: #555;
+}
+
+.positionCoords {
+  font-size: 11px;
+  color: #999;
+}
+
+.positionActions {
+  display: flex;
+  gap: 8px;
+}
+
+.savePositionBtn {
+  border: none;
+  background: #f5820c;
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.savePositionBtn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

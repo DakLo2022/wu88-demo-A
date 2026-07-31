@@ -1,0 +1,402 @@
+{
+  "hero-slide-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "hero-slide-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "hero-slide-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "hero-slide-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "sidedock-mail": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-card-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-card-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-card-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-card-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-card-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-13": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-14": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-15": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-16": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-9": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-10": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-11": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-12": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-6": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-7": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-8": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "vendor-logo-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "footer-qr-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "footer-qr-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "logo": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-6": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-7": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-8": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-9": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-10": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-11": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-12": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-13": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-14": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-15": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-16": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-slots-17": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-sports-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-sports-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-sports-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-sports-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-sports-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-6": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-7": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-live-8": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-lottery-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-lottery-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-lottery-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-lottery-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-cards-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-cards-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-cards-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-fishing-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-fishing-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-esports-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-sports-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "sidedock-line": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "sidedock-app": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-register-icon": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-hot-0": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-hot-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "nav-hot-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-eye-show": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-eye-hide": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  }
+}
