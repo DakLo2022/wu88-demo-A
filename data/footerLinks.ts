@@ -34,7 +34,7 @@ export const footerGroups: FooterGroup[] = [
 ];
 
 export const footerMeta = {
-  version: "v.demo",
+  version: "WU88",
   aboutLabel: "關於我們",
   faqLabel: "常見問題",
   siteMapLabel: "網站導覽",

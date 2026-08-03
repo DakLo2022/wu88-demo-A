@@ -8,7 +8,7 @@ export default function AnnouncementTicker() {
 
   return (
     <div className="flex items-center overflow-hidden border-b border-white/10 bg-black py-2">
-      <span className="ml-4 flex-shrink-0 rounded bg-brand-orange/80 px-1.5 py-0.5 text-xs text-white">
+      <span className="ml-4 flex-shrink-0 rounded bg-brand-accent/80 px-1.5 py-0.5 text-xs text-white">
         公告
       </span>
       <div className="ml-3 flex-1 overflow-hidden">

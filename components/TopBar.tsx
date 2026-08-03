@@ -18,7 +18,7 @@ export default function TopBar({ images }: Props) {
   const eyeIconSrc = showPassword ? eyeHideIconSrc : eyeShowIconSrc;
 
   return (
-    <div className="flex h-10 items-center bg-gradient-to-b from-[rgb(255,138,63)] to-[rgb(232,85,20)] text-[11px] text-white">
+    <div className="flex h-10 items-center bg-gradient-to-b from-brand-from to-brand-to text-[11px] text-white">
       {/* Same max-width + horizontal padding as Navbar's inner container so
           the left/right edges of both bars line up exactly. */}
       <div className="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-between gap-2 px-4">
@@ -34,7 +34,7 @@ export default function TopBar({ images }: Props) {
         </div>
 
         <div className="flex flex-wrap items-center gap-1.5">
-          <button className="flex items-center gap-1 rounded-[6px] bg-amber-400 px-3 py-1.5 font-medium text-white hover:bg-amber-300">
+          <button className="flex items-center gap-1 rounded-[6px] bg-brand-accent px-3 py-1.5 font-medium text-[var(--brand-button-text)] hover:bg-brand-accentDark">
             {registerIconSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={registerIconSrc} alt="" className="h-4 w-4 object-contain" />
@@ -87,10 +87,10 @@ export default function TopBar({ images }: Props) {
               )}
             </button>
           </div>
-          <button className="rounded-[6px] bg-amber-400 px-4 py-1.5 font-semibold text-white hover:bg-amber-300">
+          <button className="rounded-[6px] bg-brand-accent px-4 py-1.5 font-semibold text-[var(--brand-button-text)] hover:bg-brand-accentDark">
             登入
           </button>
-          <button className="rounded-[6px] bg-amber-400 px-4 py-1.5 font-medium text-white hover:bg-amber-300">
+          <button className="rounded-[6px] bg-brand-accent px-4 py-1.5 font-medium text-[var(--brand-button-text)] hover:bg-brand-accentDark">
             忘記密碼
           </button>
         </div>

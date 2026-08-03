@@ -45,6 +45,7 @@ export const IMAGE_SLOTS: ImageSlot[] = [
   { id: "sidedock-line", label: "側邊 Line 客服 Icon", category: "icon", width: 32, height: 32 },
   { id: "sidedock-mail", label: "側邊信箱 Icon", category: "icon", width: 32, height: 32 },
   { id: "sidedock-app", label: "側邊 APP 下載 Icon", category: "icon", width: 32, height: 32 },
+  { id: "sidedock-cs-right", label: "右側客服圓形按鈕 Icon", category: "icon", width: 36, height: 36 },
 
   // Footer vendor/partner logo strip. Upload as many as needed — the
   // footer only renders the ones that actually have a file uploaded.

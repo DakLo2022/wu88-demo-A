@@ -31,7 +31,7 @@ export default function Navbar({ images }: Props) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={logoSrc} alt="Logo" className="h-10 w-auto max-w-[180px] object-contain" />
           ) : (
-            <div className="flex h-10 w-32 items-center justify-center rounded bg-brand-orange text-sm font-bold text-white">
+            <div className="flex h-10 w-32 items-center justify-center rounded bg-brand-accent text-sm font-bold text-white">
               LOGO
             </div>
           )}
@@ -43,9 +43,9 @@ export default function Navbar({ images }: Props) {
               key={cat.key}
               href={`/category/${cat.key}`}
               onMouseEnter={() => setHoveredKey(cat.key)}
-              className={`flex items-center gap-1.5 py-1 transition hover:text-brand-orange ${
+              className={`flex items-center gap-1.5 py-1 transition hover:text-brand-accent ${
                 idx > 0 ? "border-l border-neutral-200 pl-4" : ""
-              } ${hoveredKey === cat.key ? "text-brand-orange" : ""}`}
+              } ${hoveredKey === cat.key ? "text-brand-accent" : ""}`}
             >
               {cat.icon && <span className="text-lg">{cat.icon}</span>}
               {cat.label}
@@ -54,7 +54,7 @@ export default function Navbar({ images }: Props) {
           <Link
             href="/promotions"
             onMouseEnter={() => setHoveredKey(null)}
-            className="border-l border-neutral-200 py-1 pl-4 font-semibold text-brand-orange transition hover:text-brand-orangeDark"
+            className="border-l border-neutral-200 py-1 pl-4 font-semibold text-[#ac35de] transition hover:opacity-80"
           >
             {promoNavLabel}
           </Link>

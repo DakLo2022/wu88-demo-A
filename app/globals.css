@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* The only 4 colors that differ between site variants (WU88 / lifehigh /
+     jin57 / pp888). Copy this whole project and change just these 4 values
+     to re-skin it — every component reads brand-from/to/accent/accentDark
+     from Tailwind, which resolve to these variables. */
+  --brand-from: #ff8a3f;
+  --brand-to: #e85514;
+  --brand-accent: #f5820c;
+  --brand-accent-dark: #e06b00;
+  --brand-button-text: #ffffff;
+}
+
 html,
 body {
   padding: 0;

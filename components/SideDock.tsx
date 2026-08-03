@@ -11,6 +11,7 @@ const dockItems = [
 // have its own icon uploaded via /image-manager; falls back to an emoji.
 export default function SideDock() {
   const images = getSlotImageMap();
+  const csIconSrc = images["sidedock-cs-right"];
 
   return (
     <>
@@ -20,7 +21,7 @@ export default function SideDock() {
           return (
             <button
               key={item.label}
-              className="flex w-16 flex-col items-center gap-1 border-b border-white/10 px-2 py-3 text-[11px] text-white/80 last:border-b-0 hover:bg-brand-orange/20 hover:text-white"
+              className="flex w-16 flex-col items-center gap-1 border-b border-white/10 px-2 py-3 text-[11px] text-white/80 last:border-b-0 hover:bg-brand-accent/20 hover:text-white"
             >
               {iconSrc ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -34,12 +35,29 @@ export default function SideDock() {
         })}
       </div>
 
-      <button
-        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-brand-panel/95 text-white shadow-lg hover:bg-brand-orange"
-        aria-label="會員中心"
-      >
-        👤
-      </button>
+      {/* Right-edge 客服 button, vertically centered, fixed (doesn't scroll).
+          Full circle, dark by default; on hover it turns brand-accent and a
+          "協助中心" label bubble slides/fades in to its left. */}
+      <div className="group fixed right-0 top-1/2 z-40 -translate-y-1/2">
+        <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand-accent px-4 py-2 text-sm text-white opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100">
+          協助中心
+        </span>
+        {/* Left-rounded pill flush against the right edge, with a
+            white-ringed circle inset (shape matches JIN's version). */}
+        <button
+          className="flex h-20 w-20 items-center justify-center rounded-l-full bg-neutral-800/90 shadow-lg transition-colors duration-300 group-hover:bg-brand-accent"
+          aria-label="客服"
+        >
+          <span className="flex h-[60px] w-[60px] items-center justify-center rounded-full border-[3px] border-white">
+            {csIconSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={csIconSrc} alt="" className="h-9 w-9 object-contain" />
+            ) : (
+              <span className="text-2xl text-white/80">👤</span>
+            )}
+          </span>
+        </button>
+      </div>
     </>
   );
 }

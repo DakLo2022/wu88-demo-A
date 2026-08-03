@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { footerGroups, footerMeta } from "@/data/footerLinks";
 import { VENDOR_LOGO_SLOT_IDS } from "@/lib/imageSlots";
 
@@ -10,8 +13,10 @@ type Props = {
 // horizontal rule under each category heading (no vertical dividers), and
 // stacked app-download badges. Bottom strip shows vendor/partner logos
 // (from the "logo" image-manager category) instead of a text line — only
-// slots that actually have an uploaded file are rendered.
+// slots that actually have an uploaded file are rendered. The sitemap
+// block can be collapsed via the arrow next to 網站導覽.
 export default function Footer({ images }: Props) {
+  const [collapsed, setCollapsed] = useState(false);
   const uploadedVendorLogos = VENDOR_LOGO_SLOT_IDS.map((id) => images[id]).filter(
     (src): src is string => Boolean(src)
   );
@@ -25,13 +30,24 @@ export default function Footer({ images }: Props) {
           <span className="cursor-pointer hover:text-white">{footerMeta.faqLabel}</span>
           <span>|</span>
           <span>{footerMeta.version}</span>
-          <span className="ml-auto cursor-pointer hover:text-white">
+          <span className="ml-auto flex items-center gap-1.5 cursor-pointer hover:text-white">
             {footerMeta.siteMapLabel}
+            <button
+              type="button"
+              onClick={() => setCollapsed((v) => !v)}
+              aria-label={collapsed ? "展開廠商內容" : "收合廠商內容"}
+              className={`inline-flex h-4 w-4 items-center justify-center transition-transform ${
+                collapsed ? "rotate-180" : ""
+              }`}
+            >
+              ▲
+            </button>
           </span>
         </div>
       </div>
 
       {/* Sitemap block: gray background, white text per reference layout. */}
+      {!collapsed && (
       <div className="bg-neutral-500 text-white">
         <div className="mx-auto max-w-[1320px] px-4 py-6">
           <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
@@ -44,7 +60,7 @@ export default function Footer({ images }: Props) {
                 <div className="mx-auto mb-2 h-px w-8 bg-white/30" />
                 <ul className="space-y-1">
                   {group.links.map((link) => (
-                    <li key={link} className="cursor-pointer text-[11px] text-white/80 hover:text-brand-orange">
+                    <li key={link} className="cursor-pointer text-[11px] text-white/80 hover:text-brand-accent">
                       {link}
                     </li>
                   ))}
@@ -84,6 +100,7 @@ export default function Footer({ images }: Props) {
           </div>
         </div>
       </div>
+      )}
 
       {/* Vendor/partner logo strip — only shows once logos are uploaded via
           /image-manager's "廠商 Logo" category. */}

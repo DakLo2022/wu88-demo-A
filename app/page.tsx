@@ -18,8 +18,10 @@ export default function HomePage() {
 
   return (
     <>
-      <TopBar images={images} />
-      <Navbar images={images} />
+      <div className="sticky top-0 z-50">
+        <TopBar images={images} />
+        <Navbar images={images} />
+      </div>
       <SideDock />
       <main className="min-h-[60vh]">
         <HeroCarousel images={images} positions={positions} />

@@ -25,7 +25,7 @@ export default function HeroCarousel({ images, positions }: Props) {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="relative flex h-[300px] items-center justify-center bg-gradient-to-br from-brand-orange/40 via-brand-dark to-black md:h-[440px]">
+      <div className="relative flex h-[300px] items-center justify-center bg-gradient-to-br from-brand-accent/40 via-brand-dark to-black md:h-[440px]">
         {heroSlides.map((slide, idx) => {
           const desktopSrc = images[slide.slotId];
           const mobileSrc = images[mobileSlotKey(slide.slotId)] ?? desktopSrc;
@@ -59,8 +59,8 @@ export default function HeroCarousel({ images, positions }: Props) {
               ) : (
                 <div className="relative flex h-full w-full items-center justify-center">
                   <div className="sparkle absolute inset-0 opacity-20" />
-                  <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand-orange/30 blur-3xl" />
-                  <div className="absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-amber-400/20 blur-3xl" />
+                  <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand-accent/30 blur-3xl" />
+                  <div className="absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-brand-accent/20 blur-3xl" />
                   <div className="relative z-10 text-center">
                     <p className="text-3xl font-extrabold tracking-wide text-white drop-shadow md:text-5xl">
                       {slide.title}
@@ -94,7 +94,7 @@ export default function HeroCarousel({ images, positions }: Props) {
               key={slide.id}
               onClick={() => setActive(idx)}
               className={`h-1.5 rounded-full transition-all ${
-                idx === active ? "w-5 bg-brand-orange" : "w-1.5 bg-white/40"
+                idx === active ? "w-5 bg-brand-accent" : "w-1.5 bg-white/40"
               }`}
               aria-label={`切換到第 ${idx + 1} 張`}
             />
