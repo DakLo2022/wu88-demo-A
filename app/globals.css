@@ -12,6 +12,12 @@
   --brand-accent: #f5820c;
   --brand-accent-dark: #e06b00;
   --brand-button-text: #ffffff;
+  /* R,G,B channels of --brand-accent, kept in sync manually. Needed because
+     Tailwind's bg-brand-accent/NN opacity-modifier syntax can't apply alpha
+     to a var() that resolves to a hex string — only to rgb()-channel vars.
+     Used as bg-[rgba(var(--brand-accent-rgb),0.7)] where a translucent
+     accent fill is needed (e.g. the mobile hero ticker overlay). */
+  --brand-accent-rgb: 245, 130, 12;
 }
 
 html,
@@ -51,4 +57,15 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #3a3a3a;
   border-radius: 4px;
+}
+
+/* Hides the scrollbar track/thumb while keeping the element scrollable —
+   used on the mobile category rail, where a visible scrollbar looks out of
+   place next to native app-style tab lists. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

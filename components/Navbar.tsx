@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { navCategories, promoNavLabel } from "@/data/nav";
-import { navProviderSlotId } from "@/lib/imageSlots";
+import { navProviderSlotId, GLOBAL_PROVIDER_SLOT_ID } from "@/lib/imageSlots";
+import { getImageTransformStyle, type ImageTransform } from "@/lib/imageTransform";
 
 type Props = {
   images: Record<string, string | null>;
+  positions: Record<string, ImageTransform>;
 };
 
 // Main site navigation. Reused on every page via app/page.tsx, which fetches
@@ -15,7 +17,7 @@ type Props = {
 // getSlotImageMap() itself). Hovering any category (except 優惠活動) opens a
 // full-width dropdown panel listing that category's providers; each
 // provider's icon comes from its own image-manager "provider" slot.
-export default function Navbar({ images }: Props) {
+export default function Navbar({ images, positions }: Props) {
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
   const activeCategory = navCategories.find((c) => c.key === hoveredKey);
   const logoSrc = images["logo"];
@@ -70,6 +72,10 @@ export default function Navbar({ images }: Props) {
             {activeCategory.providers.map((name, idx) => {
               const slotId = navProviderSlotId(activeCategory.key, idx);
               const src = images[slotId];
+              // This provider's own saved (desktop) position wins; otherwise
+              // fall back to the "廠商圖片統一版面設定" global desktop
+              // default from /image-manager, if one's been set.
+              const transform = positions[slotId] ?? positions[GLOBAL_PROVIDER_SLOT_ID];
               return (
                 <div
                   key={slotId}
@@ -81,6 +87,7 @@ export default function Navbar({ images }: Props) {
                       src={src}
                       alt={name}
                       className="aspect-[300/360] w-full object-contain"
+                      style={transform ? getImageTransformStyle(transform) : undefined}
                     />
                   ) : (
                     <div className="flex aspect-[300/360] w-full items-center justify-center rounded-lg bg-neutral-100 text-4xl text-neutral-300">

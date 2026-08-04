@@ -7,6 +7,22 @@ import { navCategories } from "@/data/nav";
 
 export type ImageSlotCategory = "banner" | "icon" | "logo" | "provider";
 
+/** Pseudo "slot id" (not a real upload slot — never valid for /api/upload-image)
+ * used only to store a single shared position/scale setting that applies to
+ * every "provider" (廠商) image at once, so the user doesn't have to drag
+ * each of the ~90+ vendor images individually. Desktop and mobile each get
+ * their own value via the normal mobileSlotKey() suffix, same as any real
+ * slot. A provider image that has its own saved position still wins over
+ * this global default. */
+export const GLOBAL_PROVIDER_SLOT_ID = "__global-provider__";
+
+/** Same idea as GLOBAL_PROVIDER_SLOT_ID, but for the small vendor-logo badge
+ * in the top-right corner of each mobile vendor card (see navBadgeSlotId)
+ * instead of the card's main art image — kept as a separate pseudo-slot
+ * since the badge is a different shape/box and shouldn't share position
+ * settings with the art image. */
+export const GLOBAL_PROVIDER_BADGE_SLOT_ID = "__global-provider-badge__";
+
 export type ImageSlot = {
   id: string;
   label: string;
@@ -69,26 +85,117 @@ export const IMAGE_SLOTS: ImageSlot[] = [
 
 export const VENDOR_LOGO_SLOT_IDS = IMAGE_SLOTS.filter((s) => s.category === "logo").map((s) => s.id);
 
-/** Deterministic slot id for a nav category's Nth provider icon. */
+/** Deterministic slot id for a nav category's Nth provider icon (used as the
+ * card's background art on the mobile category explorer). */
 export function navProviderSlotId(categoryKey: string, index: number): string {
   return `nav-${categoryKey}-${index}`;
 }
 
-// One icon slot per provider in each nav dropdown (hover panel below the
-// navbar). Generated from data/nav.ts so the count always matches whatever
-// provider list is configured there — add/remove a provider in nav.ts and
-// the matching upload slot appears/disappears automatically.
+/** Deterministic slot id for a nav category's Nth provider's small vendor
+ * logo badge — rendered in the top-right corner of the mobile category
+ * explorer's vendor card (top-left is the plain-text game name, no upload
+ * needed there). */
+export function navBadgeSlotId(categoryKey: string, index: number): string {
+  return `nav-${categoryKey}-${index}-badge`;
+}
+
+/** Slot id for a mobile-only left-rail category icon, default (unselected)
+ * state. */
+export function mobileCatIconSlotId(categoryKey: string): string {
+  return `mobile-cat-${categoryKey}-icon`;
+}
+
+/** Slot id for a mobile-only left-rail category icon, active (selected)
+ * state — swapped in when that rail button is the current tab. */
+export function mobileCatIconActiveSlotId(categoryKey: string): string {
+  return `mobile-cat-${categoryKey}-icon-active`;
+}
+
+// One icon slot + one vendor-logo badge slot per provider in each nav
+// dropdown (hover panel below the navbar / mobile category explorer).
+// Generated from data/nav.ts so the count always matches whatever provider
+// list is configured there — add/remove a provider in nav.ts and the
+// matching upload slots appear/disappear automatically.
 export const NAV_PROVIDER_SLOTS: ImageSlot[] = navCategories.flatMap((cat) =>
-  cat.providers.map((providerName, idx) => ({
-    id: navProviderSlotId(cat.key, idx),
-    label: `${cat.label} - ${providerName}`,
-    category: "provider" as const,
-    width: 96,
-    height: 96,
-  }))
+  cat.providers.flatMap((providerName, idx) => [
+    {
+      id: navProviderSlotId(cat.key, idx),
+      label: `${cat.label} - ${providerName}`,
+      category: "provider" as const,
+      width: 96,
+      height: 96,
+    },
+    {
+      id: navBadgeSlotId(cat.key, idx),
+      label: `${cat.label} - ${providerName}（右上角廠商 Logo）`,
+      category: "provider" as const,
+      width: 48,
+      height: 48,
+    },
+  ])
 );
 
 IMAGE_SLOTS.push(...NAV_PROVIDER_SLOTS);
+
+// Two upload slots per mobile left-rail category icon: default + active
+// state (tap to switch — the icon can change color/art when selected).
+export const MOBILE_CATEGORY_SLOTS: ImageSlot[] = navCategories.flatMap((cat) => [
+  {
+    id: mobileCatIconSlotId(cat.key),
+    label: `手機版左側分類 - ${cat.label} 圖示（預設）`,
+    category: "icon" as const,
+    width: 24,
+    height: 24,
+  },
+  {
+    id: mobileCatIconActiveSlotId(cat.key),
+    label: `手機版左側分類 - ${cat.label} 圖示（選中）`,
+    category: "icon" as const,
+    width: 24,
+    height: 24,
+  },
+]);
+
+IMAGE_SLOTS.push(...MOBILE_CATEGORY_SLOTS);
+
+/** Slot id for a mobile-only bottom tab-bar icon (優惠/帳務/服務/我/存提). */
+export function mobileTabIconSlotId(itemId: string): string {
+  return `mobile-tab-${itemId}-icon`;
+}
+
+export const MOBILE_TAB_ITEMS = [
+  { id: "promo", label: "優惠", fallbackEmoji: "🎁" },
+  { id: "billing", label: "帳務", fallbackEmoji: "📄" },
+  { id: "service", label: "服務", fallbackEmoji: "🎧" },
+  { id: "member", label: "我", fallbackEmoji: "👤" },
+] as const;
+
+// The raised center "存提" button is kept separate from MOBILE_TAB_ITEMS
+// above (rather than a 5th list entry) because MobileBottomNav splits that
+// list in half for the two side groups and renders the center button with
+// its own distinct raised-circle markup — it needs its own dedicated upload
+// slot rather than sharing the site "logo" slot, so it can have its own
+// artwork independent of the header/footer logo.
+export const MOBILE_TAB_CENTER_ID = "center";
+
+export const MOBILE_TAB_SLOTS: ImageSlot[] = [
+  ...MOBILE_TAB_ITEMS.map((item) => ({
+    id: mobileTabIconSlotId(item.id),
+    label: `手機版底部選單 - ${item.label} 圖示`,
+    category: "icon" as const,
+    width: 28,
+    height: 28,
+  })),
+  {
+    id: mobileTabIconSlotId(MOBILE_TAB_CENTER_ID),
+    label: "手機版底部選單 - 存提（中間浮起按鈕）圖示",
+    category: "icon" as const,
+    width: 28,
+    height: 28,
+  },
+];
+
+IMAGE_SLOTS.push(...MOBILE_TAB_SLOTS);
 
 export const ALLOWED_IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp", "gif", "svg"] as const;
 

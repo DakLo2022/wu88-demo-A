@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isValidSlotId } from "@/lib/imageSlots";
+import { GLOBAL_PROVIDER_BADGE_SLOT_ID, GLOBAL_PROVIDER_SLOT_ID, isValidSlotId } from "@/lib/imageSlots";
 import { mobileSlotKey } from "@/lib/imageTransform";
 import { resetSlotPosition, saveSlotPosition } from "@/lib/imagePositions";
+
+const RESERVED_GLOBAL_SLOT_IDS = new Set([GLOBAL_PROVIDER_SLOT_ID, GLOBAL_PROVIDER_BADGE_SLOT_ID]);
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { slotId, x, y, scale, reset, device } = body ?? {};
 
-    if (typeof slotId !== "string" || !isValidSlotId(slotId)) {
+    // GLOBAL_PROVIDER_SLOT_ID / GLOBAL_PROVIDER_BADGE_SLOT_ID are reserved
+    // pseudo-ids for the "apply to all vendor images/badges at once"
+    // settings — not real upload slots, so they won't pass isValidSlotId(),
+    // but they're legitimate position-save targets.
+    if (typeof slotId !== "string" || (!RESERVED_GLOBAL_SLOT_IDS.has(slotId) && !isValidSlotId(slotId))) {
       return NextResponse.json({ error: "無效的圖片欄位 ID" }, { status: 400 });
     }
 

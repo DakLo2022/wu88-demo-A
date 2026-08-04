@@ -2,7 +2,13 @@
 
 import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import styles from "./ImageManager.module.css";
-import type { ImageSlot, ImageSlotCategory } from "@/lib/imageSlots";
+import {
+  GLOBAL_PROVIDER_BADGE_SLOT_ID,
+  GLOBAL_PROVIDER_SLOT_ID,
+  type ImageSlot,
+  type ImageSlotCategory,
+} from "@/lib/imageSlots";
+import { navCategories } from "@/data/nav";
 import {
   clampImageTransform,
   DEFAULT_IMAGE_TRANSFORM,
@@ -12,6 +18,41 @@ import {
 } from "@/lib/imageTransform";
 
 type Device = "desktop" | "mobile";
+
+// What the preview thumbnail needs to match to be WYSIWYG with the actual
+// live-site render for a given slot + device — otherwise dragging in the
+// admin tool can look fine there but come out cropped differently live (the
+// bug this fixes). Every other slot type (banner/icon/logo) keeps the
+// original fixed 4:3 "contain, always fully visible" preview, since nothing
+// changed for those. Provider (廠商) images are special because they render
+// two different ways depending on device: object-cover inside a
+// category-specific-height card on mobile (MobileCategoryExplorer), and
+// object-contain inside a fixed aspect-[300/360] box on desktop (Navbar's
+// hover dropdown).
+function getPreviewFit(slot: ImageSlot, device: Device): { objectFit: "cover" | "contain"; aspectRatio: number } {
+  if (slot.category === "provider" && slot.id.endsWith("-badge")) {
+    // Small corner logo — never cropped, just fit + repositioned inside its
+    // own little box (see the "h-[45px] w-[56px]" wrapper in
+    // MobileCategoryExplorer).
+    return { objectFit: "contain", aspectRatio: 56 / 45 };
+  }
+  if (slot.category === "provider" && !slot.id.endsWith("-badge")) {
+    if (device === "mobile") {
+      const categoryKey = slot.id.replace(/^nav-/, "").replace(/-\d+$/, "");
+      const category = navCategories.find((c) => c.key === categoryKey);
+      const height = category?.mobileCardHeight === "tall" ? 288 : 192;
+      // Single-column categories (棋牌/捕魚/電競) render each card at the
+      // grid pane's full width (~319.6px measured off wu88.live at a
+      // 414px-wide viewport), not the ~156.8px a 2-column card gets — missing
+      // this is exactly why "cards" (棋牌) was still showing cropped
+      // differently after the first fix, which only corrected the height.
+      const width = category?.mobileColumns === 1 ? 319.6 : 156.8;
+      return { objectFit: "cover", aspectRatio: width / height };
+    }
+    return { objectFit: "contain", aspectRatio: 300 / 360 };
+  }
+  return { objectFit: "contain", aspectRatio: 4 / 3 };
+}
 
 // "版面" (banner) 依畫面區塊分類；"icon" 圖示自成一區；"logo" 是 footer 廠商 logo 列；
 // "provider" 是導覽列 hover 下拉選單裡每個廠商的圖示。
@@ -93,22 +134,58 @@ export default function ImageManagerClient({
     return device === "mobile" ? mobileSlotKey(slotId) : slotId;
   }
 
+  function isProviderSlot(slotId: string): boolean {
+    return slots.some((s) => s.id === slotId && s.category === "provider");
+  }
+
+  // Mirrors the live-site fallback chain (mobile global > desktop global) so
+  // a provider slot's admin preview starts from whatever it will ACTUALLY
+  // render as on the public page, not a blank default — otherwise opening a
+  // single image to fine-tune it after setting the global default would
+  // visually "jump" back to centered/100%, making it look like per-slot
+  // editing doesn't build on top of / override the global setting.
+  function getGlobalProviderFallback(
+    map: Record<string, ImageTransform>,
+    device: Device,
+    globalSlotId: string
+  ): ImageTransform | undefined {
+    if (device === "mobile") {
+      return map[mobileSlotKey(globalSlotId)] ?? map[globalSlotId];
+    }
+    return map[globalSlotId];
+  }
+
+  function globalSlotIdFor(slotId: string): string {
+    return slotId.endsWith("-badge") ? GLOBAL_PROVIDER_BADGE_SLOT_ID : GLOBAL_PROVIDER_SLOT_ID;
+  }
+
   function getTransform(slotId: string): ImageTransform {
     const device = getDevice(slotId);
+    const globalFallback = isProviderSlot(slotId)
+      ? getGlobalProviderFallback(positions, device, globalSlotIdFor(slotId))
+      : undefined;
     if (device === "mobile") {
-      return positions[getStorageKey(slotId, "mobile")] ?? positions[slotId] ?? DEFAULT_IMAGE_TRANSFORM;
+      return (
+        positions[getStorageKey(slotId, "mobile")] ?? positions[slotId] ?? globalFallback ?? DEFAULT_IMAGE_TRANSFORM
+      );
     }
-    return positions[slotId] ?? DEFAULT_IMAGE_TRANSFORM;
+    return positions[slotId] ?? globalFallback ?? DEFAULT_IMAGE_TRANSFORM;
   }
 
   function getSavedTransformForDisplay(slotId: string): ImageTransform {
     const device = getDevice(slotId);
+    const globalFallback = isProviderSlot(slotId)
+      ? getGlobalProviderFallback(savedPositions, device, globalSlotIdFor(slotId))
+      : undefined;
     if (device === "mobile") {
       return (
-        savedPositions[getStorageKey(slotId, "mobile")] ?? savedPositions[slotId] ?? DEFAULT_IMAGE_TRANSFORM
+        savedPositions[getStorageKey(slotId, "mobile")] ??
+        savedPositions[slotId] ??
+        globalFallback ??
+        DEFAULT_IMAGE_TRANSFORM
       );
     }
-    return savedPositions[slotId] ?? DEFAULT_IMAGE_TRANSFORM;
+    return savedPositions[slotId] ?? globalFallback ?? DEFAULT_IMAGE_TRANSFORM;
   }
 
   function isDirty(slotId: string): boolean {
@@ -163,6 +240,14 @@ export default function ImageManagerClient({
     setPositions((prev) => ({ ...prev, [storageKey]: next }));
   }
 
+  function handleAxisInputChange(slotId: string, axis: "x" | "y", value: number) {
+    if (Number.isNaN(value)) return;
+    const current = getTransform(slotId);
+    const next = clampImageTransform({ ...current, [axis]: value });
+    const storageKey = getStorageKey(slotId, getDevice(slotId));
+    setPositions((prev) => ({ ...prev, [storageKey]: next }));
+  }
+
   async function handleSavePosition(slotId: string) {
     setPositionSaveStates((prev) => ({ ...prev, [slotId]: "saving" }));
     try {
@@ -199,21 +284,21 @@ export default function ImageManagerClient({
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error ?? "重設失敗，請稍後再試");
 
-      if (device === "mobile") {
-        setPositions((prev) => {
-          const next = { ...prev };
-          delete next[storageKey];
-          return next;
-        });
-        setSavedPositions((prev) => {
-          const next = { ...prev };
-          delete next[storageKey];
-          return next;
-        });
-      } else {
-        setPositions((prev) => ({ ...prev, [storageKey]: DEFAULT_IMAGE_TRANSFORM }));
-        setSavedPositions((prev) => ({ ...prev, [storageKey]: DEFAULT_IMAGE_TRANSFORM }));
-      }
+      // Always clear the key entirely (matching what the server just did),
+      // rather than pinning it to DEFAULT_IMAGE_TRANSFORM — for a provider
+      // slot, that distinction matters: a cleared key falls back through to
+      // the global "廠商圖片統一版面設定" default (if one exists), whereas a
+      // key explicitly set to default would permanently block that fallback.
+      setPositions((prev) => {
+        const next = { ...prev };
+        delete next[storageKey];
+        return next;
+      });
+      setSavedPositions((prev) => {
+        const next = { ...prev };
+        delete next[storageKey];
+        return next;
+      });
       setPositionSaveStates((prev) => ({ ...prev, [slotId]: "saved" }));
     } catch {
       setPositionSaveStates((prev) => ({ ...prev, [slotId]: "idle" }));
@@ -222,6 +307,41 @@ export default function ImageManagerClient({
 
   const grouped: Record<ImageSlotCategory, ImageSlot[]> = { banner: [], icon: [], logo: [], provider: [] };
   for (const slot of slots) grouped[slot.category].push(slot);
+
+  // "廠商圖片統一版面設定" — one shared position/scale for every provider
+  // image at once (desktop/mobile independent), so ~90+ vendor images don't
+  // each need dragging by hand. Reuses all the same generic per-slot state
+  // functions above by just treating GLOBAL_PROVIDER_SLOT_ID as if it were a
+  // regular slot id.
+  const globalProviderDevice = getDevice(GLOBAL_PROVIDER_SLOT_ID);
+  const globalProviderTransform = getTransform(GLOBAL_PROVIDER_SLOT_ID);
+  const globalProviderDirty = isDirty(GLOBAL_PROVIDER_SLOT_ID);
+  const globalProviderSaveState = positionSaveStates[GLOBAL_PROVIDER_SLOT_ID] ?? "idle";
+  const providerArtSlots = grouped.provider.filter((s) => !s.id.endsWith("-badge"));
+  const globalProviderPreviewSlot = providerArtSlots.find((s) =>
+    globalProviderDevice === "mobile" ? mobileImages[s.id] ?? images[s.id] : images[s.id]
+  );
+  const globalProviderPreviewSrc = globalProviderPreviewSlot
+    ? globalProviderDevice === "mobile"
+      ? mobileImages[globalProviderPreviewSlot.id] ?? images[globalProviderPreviewSlot.id]
+      : images[globalProviderPreviewSlot.id]
+    : null;
+
+  // Same idea, but for the small vendor-logo badge in each card's top-right
+  // corner instead of the card's main art image.
+  const globalBadgeDevice = getDevice(GLOBAL_PROVIDER_BADGE_SLOT_ID);
+  const globalBadgeTransform = getTransform(GLOBAL_PROVIDER_BADGE_SLOT_ID);
+  const globalBadgeDirty = isDirty(GLOBAL_PROVIDER_BADGE_SLOT_ID);
+  const globalBadgeSaveState = positionSaveStates[GLOBAL_PROVIDER_BADGE_SLOT_ID] ?? "idle";
+  const providerBadgeSlots = grouped.provider.filter((s) => s.id.endsWith("-badge"));
+  const globalBadgePreviewSlot = providerBadgeSlots.find((s) =>
+    globalBadgeDevice === "mobile" ? mobileImages[s.id] ?? images[s.id] : images[s.id]
+  );
+  const globalBadgePreviewSrc = globalBadgePreviewSlot
+    ? globalBadgeDevice === "mobile"
+      ? mobileImages[globalBadgePreviewSlot.id] ?? images[globalBadgePreviewSlot.id]
+      : images[globalBadgePreviewSlot.id]
+    : null;
 
   async function handleFileChange(slotId: string, fileList: FileList | null) {
     const file = fileList?.[0];
@@ -304,6 +424,296 @@ export default function ImageManagerClient({
       {CATEGORY_ORDER.filter((category) => category === activeCategory).map((category) => (
         <section key={category} className={styles.section}>
           <h2 className={styles.sectionTitle}>{CATEGORY_LABELS[category]}</h2>
+
+          {category === "provider" && (
+            <div className={styles.globalPanel}>
+              <div className={styles.globalPanelText}>
+                <div className={styles.globalPanelTitle}>廠商圖片統一版面設定</div>
+                <p className={styles.globalPanelHint}>
+                  設定一次，套用到「所有」還沒被個別調整過位置的廠商圖片／右上角 Logo（左邊卡片調整圖片本身，
+                  右邊卡片調整右上角小 Logo，各自獨立）；下面某張圖或某個 Logo 如果自己拖曳並存過位置，
+                  會優先套用該張自己的設定。桌面版、手機版也各自獨立設定。
+                </p>
+              </div>
+
+              <div className={`${styles.card} ${styles.globalPanelCard}`}>
+                <div className={styles.deviceTabBar} role="tablist" aria-label="桌面/手機統一設定切換">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={globalProviderDevice === "desktop"}
+                    className={globalProviderDevice === "desktop" ? styles.deviceTabBtnActive : styles.deviceTabBtn}
+                    onClick={() =>
+                      setDeviceBySlot((prev) => ({ ...prev, [GLOBAL_PROVIDER_SLOT_ID]: "desktop" }))
+                    }
+                  >
+                    桌面
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={globalProviderDevice === "mobile"}
+                    className={globalProviderDevice === "mobile" ? styles.deviceTabBtnActive : styles.deviceTabBtn}
+                    onClick={() =>
+                      setDeviceBySlot((prev) => ({ ...prev, [GLOBAL_PROVIDER_SLOT_ID]: "mobile" }))
+                    }
+                  >
+                    手機
+                  </button>
+                </div>
+
+                <div
+                  className={styles.previewWrap}
+                  style={
+                    globalProviderPreviewSlot
+                      ? { aspectRatio: String(getPreviewFit(globalProviderPreviewSlot, globalProviderDevice).aspectRatio) }
+                      : undefined
+                  }
+                >
+                  {globalProviderPreviewSrc && globalProviderPreviewSlot ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={globalProviderPreviewSrc}
+                      alt="廠商圖片預覽（任一張已上傳的廠商圖，僅供預覽用）"
+                      className={styles.previewImg}
+                      style={{
+                        ...getImageTransformStyle(globalProviderTransform),
+                        objectFit: getPreviewFit(globalProviderPreviewSlot, globalProviderDevice).objectFit,
+                        cursor: "grab",
+                        touchAction: "none",
+                      }}
+                      onPointerDown={(e) => handlePointerDown(GLOBAL_PROVIDER_SLOT_ID, e)}
+                      onPointerMove={handlePointerMove}
+                      onPointerUp={handlePointerUp}
+                      draggable={false}
+                    />
+                  ) : (
+                    <div className={styles.previewPlaceholder} style={{ background: "#d9d9d9" }}>
+                      <span>尚無廠商圖片可預覽</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.info}>
+                  <div className={styles.slotLabel}>
+                    預覽圖：{globalProviderPreviewSlot?.label ?? "（尚未上傳任何廠商圖片）"}
+                  </div>
+
+                  <div className={styles.positionEditor}>
+                    <div className={styles.positionHint}>
+                      在上方縮圖拖曳調整；
+                      {globalProviderDevice === "mobile" ? "目前調整的是「手機版」統一設定。" : "目前調整的是「桌面版」統一設定。"}
+                    </div>
+
+                    <label className={styles.scaleRow}>
+                      <span>縮放 {Math.round(globalProviderTransform.scale * 100)}%</span>
+                      <input
+                        type="range"
+                        min={30}
+                        max={300}
+                        step={5}
+                        value={Math.round(globalProviderTransform.scale * 100)}
+                        onChange={(e) => handleScaleChange(GLOBAL_PROVIDER_SLOT_ID, Number(e.target.value))}
+                      />
+                    </label>
+
+                    <div className={styles.axisRow}>
+                      <label className={styles.axisField}>
+                        X
+                        <input
+                          type="number"
+                          className={styles.axisInput}
+                          value={Math.round(globalProviderTransform.x)}
+                          onChange={(e) =>
+                            handleAxisInputChange(GLOBAL_PROVIDER_SLOT_ID, "x", Number(e.target.value))
+                          }
+                        />
+                        %
+                      </label>
+                      <label className={styles.axisField}>
+                        Y
+                        <input
+                          type="number"
+                          className={styles.axisInput}
+                          value={Math.round(globalProviderTransform.y)}
+                          onChange={(e) =>
+                            handleAxisInputChange(GLOBAL_PROVIDER_SLOT_ID, "y", Number(e.target.value))
+                          }
+                        />
+                        %
+                      </label>
+                    </div>
+
+                    <div className={styles.positionActions}>
+                      <button
+                        type="button"
+                        className={styles.savePositionBtn}
+                        onClick={() => handleSavePosition(GLOBAL_PROVIDER_SLOT_ID)}
+                        disabled={globalProviderSaveState === "saving"}
+                      >
+                        {globalProviderSaveState === "saving" ? "儲存中…" : "套用到全部廠商圖片"}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.resetPositionBtn}
+                        onClick={() => handleResetPosition(GLOBAL_PROVIDER_SLOT_ID)}
+                        disabled={globalProviderSaveState === "saving"}
+                      >
+                        重設
+                      </button>
+                    </div>
+
+                    {globalProviderDirty && globalProviderSaveState !== "saving" && (
+                      <div className={styles.statusUploading}>尚未儲存，正式頁面不會套用</div>
+                    )}
+                    {!globalProviderDirty && globalProviderSaveState === "saved" && (
+                      <div className={styles.statusSuccess}>已儲存，套用到所有未個別設定的廠商圖片</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles.card} ${styles.globalPanelCard}`}>
+                <div className={styles.deviceTabBar} role="tablist" aria-label="桌面/手機右上角 Logo 統一設定切換">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={globalBadgeDevice === "desktop"}
+                    className={globalBadgeDevice === "desktop" ? styles.deviceTabBtnActive : styles.deviceTabBtn}
+                    onClick={() =>
+                      setDeviceBySlot((prev) => ({ ...prev, [GLOBAL_PROVIDER_BADGE_SLOT_ID]: "desktop" }))
+                    }
+                  >
+                    桌面
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={globalBadgeDevice === "mobile"}
+                    className={globalBadgeDevice === "mobile" ? styles.deviceTabBtnActive : styles.deviceTabBtn}
+                    onClick={() =>
+                      setDeviceBySlot((prev) => ({ ...prev, [GLOBAL_PROVIDER_BADGE_SLOT_ID]: "mobile" }))
+                    }
+                  >
+                    手機
+                  </button>
+                </div>
+
+                <div
+                  className={styles.previewWrap}
+                  style={
+                    globalBadgePreviewSlot
+                      ? { aspectRatio: String(getPreviewFit(globalBadgePreviewSlot, globalBadgeDevice).aspectRatio) }
+                      : undefined
+                  }
+                >
+                  {globalBadgePreviewSrc && globalBadgePreviewSlot ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={globalBadgePreviewSrc}
+                      alt="右上角 Logo 預覽（任一張已上傳的廠商 Logo，僅供預覽用）"
+                      className={styles.previewImg}
+                      style={{
+                        ...getImageTransformStyle(globalBadgeTransform),
+                        objectFit: getPreviewFit(globalBadgePreviewSlot, globalBadgeDevice).objectFit,
+                        cursor: "grab",
+                        touchAction: "none",
+                      }}
+                      onPointerDown={(e) => handlePointerDown(GLOBAL_PROVIDER_BADGE_SLOT_ID, e)}
+                      onPointerMove={handlePointerMove}
+                      onPointerUp={handlePointerUp}
+                      draggable={false}
+                    />
+                  ) : (
+                    <div className={styles.previewPlaceholder} style={{ background: "#d9d9d9" }}>
+                      <span>尚無右上角 Logo 可預覽</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.info}>
+                  <div className={styles.slotLabel}>
+                    廠商圖右上角 Logo 統一版面設定
+                    <br />
+                    預覽：{globalBadgePreviewSlot?.label ?? "（尚未上傳任何廠商 Logo）"}
+                  </div>
+
+                  <div className={styles.positionEditor}>
+                    <div className={styles.positionHint}>
+                      在上方縮圖拖曳調整；
+                      {globalBadgeDevice === "mobile" ? "目前調整的是「手機版」統一設定。" : "目前調整的是「桌面版」統一設定。"}
+                    </div>
+
+                    <label className={styles.scaleRow}>
+                      <span>縮放 {Math.round(globalBadgeTransform.scale * 100)}%</span>
+                      <input
+                        type="range"
+                        min={30}
+                        max={300}
+                        step={5}
+                        value={Math.round(globalBadgeTransform.scale * 100)}
+                        onChange={(e) => handleScaleChange(GLOBAL_PROVIDER_BADGE_SLOT_ID, Number(e.target.value))}
+                      />
+                    </label>
+
+                    <div className={styles.axisRow}>
+                      <label className={styles.axisField}>
+                        X
+                        <input
+                          type="number"
+                          className={styles.axisInput}
+                          value={Math.round(globalBadgeTransform.x)}
+                          onChange={(e) =>
+                            handleAxisInputChange(GLOBAL_PROVIDER_BADGE_SLOT_ID, "x", Number(e.target.value))
+                          }
+                        />
+                        %
+                      </label>
+                      <label className={styles.axisField}>
+                        Y
+                        <input
+                          type="number"
+                          className={styles.axisInput}
+                          value={Math.round(globalBadgeTransform.y)}
+                          onChange={(e) =>
+                            handleAxisInputChange(GLOBAL_PROVIDER_BADGE_SLOT_ID, "y", Number(e.target.value))
+                          }
+                        />
+                        %
+                      </label>
+                    </div>
+
+                    <div className={styles.positionActions}>
+                      <button
+                        type="button"
+                        className={styles.savePositionBtn}
+                        onClick={() => handleSavePosition(GLOBAL_PROVIDER_BADGE_SLOT_ID)}
+                        disabled={globalBadgeSaveState === "saving"}
+                      >
+                        {globalBadgeSaveState === "saving" ? "儲存中…" : "套用到全部右上角 Logo"}
+                      </button>
+                      <button
+                        type="button"
+                        className={styles.resetPositionBtn}
+                        onClick={() => handleResetPosition(GLOBAL_PROVIDER_BADGE_SLOT_ID)}
+                        disabled={globalBadgeSaveState === "saving"}
+                      >
+                        重設
+                      </button>
+                    </div>
+
+                    {globalBadgeDirty && globalBadgeSaveState !== "saving" && (
+                      <div className={styles.statusUploading}>尚未儲存，正式頁面不會套用</div>
+                    )}
+                    {!globalBadgeDirty && globalBadgeSaveState === "saved" && (
+                      <div className={styles.statusSuccess}>已儲存，套用到所有未個別設定的右上角 Logo</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className={styles.grid}>
             {grouped[category].map((slot) => {
               const placeholder = getPlaceholder(slot.id);
@@ -342,7 +752,10 @@ export default function ImageManagerClient({
                     </button>
                   </div>
 
-                  <div className={styles.previewWrap}>
+                  <div
+                    className={styles.previewWrap}
+                    style={{ aspectRatio: String(getPreviewFit(slot, device).aspectRatio) }}
+                  >
                     {src ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -351,7 +764,7 @@ export default function ImageManagerClient({
                         className={styles.previewImg}
                         style={{
                           ...getImageTransformStyle(transform),
-                          objectFit: "contain",
+                          objectFit: getPreviewFit(slot, device).objectFit,
                           cursor: "grab",
                           touchAction: "none",
                         }}
@@ -438,8 +851,27 @@ export default function ImageManagerClient({
                           />
                         </label>
 
-                        <div className={styles.positionCoords}>
-                          X {Math.round(transform.x)}% . Y {Math.round(transform.y)}%
+                        <div className={styles.axisRow}>
+                          <label className={styles.axisField}>
+                            X
+                            <input
+                              type="number"
+                              className={styles.axisInput}
+                              value={Math.round(transform.x)}
+                              onChange={(e) => handleAxisInputChange(slot.id, "x", Number(e.target.value))}
+                            />
+                            %
+                          </label>
+                          <label className={styles.axisField}>
+                            Y
+                            <input
+                              type="number"
+                              className={styles.axisInput}
+                              value={Math.round(transform.y)}
+                              onChange={(e) => handleAxisInputChange(slot.id, "y", Number(e.target.value))}
+                            />
+                            %
+                          </label>
                         </div>
 
                         <div className={styles.positionActions}>

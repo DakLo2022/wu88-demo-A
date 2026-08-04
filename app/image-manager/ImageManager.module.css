@@ -240,6 +240,70 @@
   color: #999;
 }
 
+.axisRow {
+  display: flex;
+  gap: 10px;
+}
+
+.axisField {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #555;
+  font-weight: 600;
+}
+
+.axisInput {
+  width: 56px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 3px 5px;
+  font-size: 12px;
+  color: #1a1a1a;
+}
+
+.axisInput:focus {
+  outline: none;
+  border-color: #f5820c;
+}
+
+.globalPanel {
+  border: 1.5px dashed #f5820c;
+  background: #fff8f1;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.globalPanelText {
+  flex: 1 1 240px;
+  min-width: 200px;
+}
+
+.globalPanelTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c2590a;
+  margin-bottom: 6px;
+}
+
+.globalPanelHint {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #6b5340;
+  margin: 0;
+}
+
+.globalPanelCard {
+  flex: 0 0 260px;
+  width: 260px;
+}
+
 .positionActions {
   display: flex;
   gap: 8px;
