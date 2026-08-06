@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { navCategories } from "@/data/nav";
 import MemberCentreModal from "./MemberCentreModal";
+import MessageCenterModal from "./MessageCenterModal";
 
 type Props = {
   images: Record<string, string | null>;
@@ -61,6 +62,8 @@ export default function TopBar({ images }: Props) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [showWallet, setShowWallet] = useState(false);
   const [showMemberCentre, setShowMemberCentre] = useState(false);
+  const [memberCentreTab, setMemberCentreTab] = useState("會員資料");
+  const [showMessageCentre, setShowMessageCentre] = useState(false);
   const registerIconSrc = images["topbar-register-icon"];
   const eyeShowIconSrc = images["topbar-eye-show"];
   const eyeHideIconSrc = images["topbar-eye-hide"];
@@ -180,25 +183,50 @@ export default function TopBar({ images }: Props) {
               ) : null}
             </div>
             <div className="flex items-center gap-1.5">
-              <button className="rounded-[5px] bg-[#f39800] px-3 py-1 font-normal text-white hover:brightness-110">
+              <button
+                onClick={() => {
+                  setMemberCentreTab("平台轉點");
+                  setShowMemberCentre(true);
+                }}
+                className="rounded-[5px] bg-[#f39800] px-3 py-1 font-normal text-white hover:brightness-110"
+              >
                 平台轉點
               </button>
-              <button className="rounded-[5px] bg-[#f39800] px-3 py-1 font-normal text-white hover:brightness-110">
+              <button
+                onClick={() => {
+                  setMemberCentreTab("儲值");
+                  setShowMemberCentre(true);
+                }}
+                className="rounded-[5px] bg-[#f39800] px-3 py-1 font-normal text-white hover:brightness-110"
+              >
                 儲值
               </button>
-              <button className="rounded-[5px] bg-[#f39800] px-3 py-1 font-normal text-white hover:brightness-110">
+              <button
+                onClick={() => {
+                  setMemberCentreTab("託售");
+                  setShowMemberCentre(true);
+                }}
+                className="rounded-[5px] bg-[#f39800] px-3 py-1 font-normal text-white hover:brightness-110"
+              >
                 託售
               </button>
             </div>
             <div className="flex items-center gap-3">
-              <button aria-label="會員中心" title="會員中心" onClick={() => setShowMemberCentre(true)}>
+              <button
+                aria-label="會員中心"
+                title="會員中心"
+                onClick={() => {
+                  setMemberCentreTab("會員資料");
+                  setShowMemberCentre(true);
+                }}
+              >
                 {memberIconSrc ? (
                   <MaskIcon src={memberIconSrc} className="h-5 w-5" />
                 ) : (
                   <span className="text-base leading-none">👤</span>
                 )}
               </button>
-              <button aria-label="消息中心" title="消息中心">
+              <button aria-label="消息中心" title="消息中心" onClick={() => setShowMessageCentre(true)}>
                 {mailIconSrc ? (
                   <MaskIcon src={mailIconSrc} className="h-5 w-5" />
                 ) : (
@@ -279,7 +307,10 @@ export default function TopBar({ images }: Props) {
         onClose={() => setShowMemberCentre(false)}
         username={username}
         images={images}
+        initialTab={memberCentreTab}
       />
+
+      <MessageCenterModal open={showMessageCentre} onClose={() => setShowMessageCentre(false)} />
     </div>
   );
 }

@@ -898,5 +898,235 @@
     "x": 0,
     "y": 0,
     "scale": 1
+  },
+  "membercentre-logo": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "invite-friends-banner": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-member-icon": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-mail-icon": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-logout-icon": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-popup-2on1-banner": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-popup-jumpvip-banner": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "promo-popup-checkin-banner": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-6": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-6": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-7": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-8": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-9": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-10": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-11": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-12": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-register-13": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-deposit-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-alipay-deposit-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-711-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-711-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-711-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-711-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-711-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-1": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-3": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-4": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-5": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-6": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-storesearch-family-7": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
   }
 }

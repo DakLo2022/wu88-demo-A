@@ -32,7 +32,7 @@ export default function HomePage() {
           <TopBar images={images} />
           <Navbar images={images} positions={positions} />
         </div>
-        <SideDock />
+        <SideDock images={images} />
         <main className="min-h-[60vh]">
           <HeroCarousel images={images} positions={positions} />
           <AnnouncementTicker />

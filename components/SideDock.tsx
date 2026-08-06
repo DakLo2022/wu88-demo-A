@@ -1,4 +1,7 @@
-import { getSlotImageMap } from "@/lib/imageSlotsServer";
+"use client";
+
+import { useState } from "react";
+import HelpCenterModal from "./HelpCenterModal";
 
 const dockItems = [
   { icon: "🎧", label: "在線客服", slotId: "sidedock-cs" },
@@ -7,10 +10,16 @@ const dockItems = [
   { icon: "📲", label: "APP下載", slotId: "sidedock-app" },
 ];
 
+type Props = { images: Record<string, string | null> };
+
 // Floating vertical dock, fixed to the left edge on desktop. Each item can
 // have its own icon uploaded via /image-manager; falls back to an emoji.
-export default function SideDock() {
-  const images = getSlotImageMap();
+// The right-edge circular button opens the 協助中心 (Help Center) popup, so
+// this needs to be a client component (button click state) — images are now
+// passed down from the page.tsx Server Component instead of being fetched
+// here directly.
+export default function SideDock({ images }: Props) {
+  const [showHelp, setShowHelp] = useState(false);
   const csIconSrc = images["sidedock-cs-right"];
 
   return (
@@ -45,8 +54,9 @@ export default function SideDock() {
         {/* Left-rounded pill flush against the right edge, with a
             white-ringed circle inset (shape matches JIN's version). */}
         <button
+          onClick={() => setShowHelp(true)}
           className="flex h-20 w-20 items-center justify-center rounded-l-full bg-neutral-800/90 shadow-lg transition-colors duration-300 group-hover:bg-brand-accent"
-          aria-label="客服"
+          aria-label="協助中心"
         >
           <span className="flex h-[60px] w-[60px] items-center justify-center rounded-full border-[3px] border-white">
             {csIconSrc ? (
@@ -58,6 +68,8 @@ export default function SideDock() {
           </span>
         </button>
       </div>
+
+      <HelpCenterModal open={showHelp} onClose={() => setShowHelp(false)} images={images} />
     </>
   );
 }

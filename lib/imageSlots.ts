@@ -46,7 +46,17 @@ export const IMAGE_SLOTS: ImageSlot[] = [
   { id: "promo-card-4", label: "示範專區 4 卡片圖", category: "banner", width: 370, height: 144 },
   { id: "promo-card-5", label: "示範專區 5 卡片圖", category: "banner", width: 370, height: 144 },
 
+  { id: "invite-friends-banner", label: "會員中心 - 邀請好友 滿版banner圖", category: "banner", width: 1000, height: 360 },
+
+  // Popup banners shown when clicking the promo-grid cards that open an
+  // activity-detail popup (首儲二選一/你跳槽我出資/每日簽到活動 — matches
+  // pc.wu88.live's real iframe-promotions popups).
+  { id: "promo-popup-2on1-banner", label: "示範專區彈窗 - 首儲二選一 Banner", category: "banner", width: 1000, height: 360 },
+  { id: "promo-popup-jumpvip-banner", label: "示範專區彈窗 - 你跳槽我出資 Banner", category: "banner", width: 1000, height: 360 },
+  { id: "promo-popup-checkin-banner", label: "示範專區彈窗 - 每日簽到活動 Banner", category: "banner", width: 1000, height: 360 },
+
   { id: "logo", label: "導覽列 Logo", category: "icon", width: 96, height: 96 },
+  { id: "membercentre-logo", label: "會員中心頁面 Logo", category: "icon", width: 130, height: 52 },
   { id: "topbar-register-icon", label: "免費註冊按鈕左側 Icon", category: "icon", width: 20, height: 20 },
   { id: "topbar-eye-show", label: "密碼欄位「顯示密碼」Icon", category: "icon", width: 20, height: 20 },
   { id: "topbar-eye-hide", label: "密碼欄位「隱藏密碼」Icon", category: "icon", width: 20, height: 20 },
@@ -199,6 +209,37 @@ export const MOBILE_TAB_SLOTS: ImageSlot[] = [
 ];
 
 IMAGE_SLOTS.push(...MOBILE_TAB_SLOTS);
+
+/** Slot id for step N of one of the 協助中心 (Help Center) step-by-step
+ * screenshot tutorials. The real site's 超商搜尋流程/USDT儲值流程/支付寶儲值流程
+ * tabs are each just a paginated sequence of plain screenshots with no real
+ * text content, so each step gets its own upload slot. */
+export function helpCenterStepSlotId(flow: string, step: number): string {
+  return `help-${flow}-${step}`;
+}
+
+const HELP_CENTER_FLOWS: { flow: string; label: string; count: number; width: number; height: number }[] = [
+  // 超商搜尋流程 has its own "7-11查詢"/"全家查詢" toggle on the real site,
+  // each with a completely separate screenshot sequence (5 steps for 7-11,
+  // 7 steps for 全家) — not one shared flow.
+  { flow: "storesearch-711", label: "協助中心 - 超商搜尋流程（7-11查詢）", count: 5, width: 820, height: 420 },
+  { flow: "storesearch-family", label: "協助中心 - 超商搜尋流程（全家查詢）", count: 7, width: 820, height: 420 },
+  { flow: "usdt", label: "協助中心 - USDT儲值流程", count: 6, width: 820, height: 420 },
+  { flow: "alipay-register", label: "協助中心 - 支付寶儲值流程（註冊流程）", count: 13, width: 320, height: 600 },
+  { flow: "alipay-deposit", label: "協助中心 - 支付寶儲值流程（儲值流程）", count: 2, width: 320, height: 600 },
+];
+
+export const HELP_CENTER_SLOTS: ImageSlot[] = HELP_CENTER_FLOWS.flatMap(({ flow, label, count, width, height }) =>
+  Array.from({ length: count }, (_, i) => ({
+    id: helpCenterStepSlotId(flow, i + 1),
+    label: `${label} 步驟${i + 1}/${count}`,
+    category: "banner" as const,
+    width,
+    height,
+  }))
+);
+
+IMAGE_SLOTS.push(...HELP_CENTER_SLOTS);
 
 export const ALLOWED_IMAGE_EXTENSIONS = ["png", "jpg", "jpeg", "webp", "gif", "svg"] as const;
 
