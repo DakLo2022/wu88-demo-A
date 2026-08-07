@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { navCategories } from "@/data/nav";
 import MemberCentreModal from "./MemberCentreModal";
 import MessageCenterModal from "./MessageCenterModal";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 type Props = {
   images: Record<string, string | null>;
@@ -64,6 +66,7 @@ export default function TopBar({ images }: Props) {
   const [showMemberCentre, setShowMemberCentre] = useState(false);
   const [memberCentreTab, setMemberCentreTab] = useState("會員資料");
   const [showMessageCentre, setShowMessageCentre] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const registerIconSrc = images["topbar-register-icon"];
   const eyeShowIconSrc = images["topbar-eye-show"];
   const eyeHideIconSrc = images["topbar-eye-hide"];
@@ -251,7 +254,10 @@ export default function TopBar({ images }: Props) {
           </div>
         ) : (
           <div className="flex flex-wrap items-center gap-1.5">
-            <button className="flex items-center gap-1 rounded-[6px] bg-brand-accent px-3 py-1.5 font-medium text-[var(--brand-button-text)] hover:bg-brand-accentDark">
+            <Link
+              href="/register"
+              className="flex items-center gap-1 rounded-[6px] bg-brand-accent px-3 py-1.5 font-medium text-[var(--brand-button-text)] hover:bg-brand-accentDark"
+            >
               {registerIconSrc ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={registerIconSrc} alt="" className="h-4 w-4 object-contain" />
@@ -259,7 +265,7 @@ export default function TopBar({ images }: Props) {
                 <span>👤</span>
               )}
               免費註冊
-            </button>
+            </Link>
             <input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -295,7 +301,10 @@ export default function TopBar({ images }: Props) {
             >
               登入
             </button>
-            <button className="rounded-[6px] bg-brand-accent px-4 py-1.5 font-medium text-[var(--brand-button-text)] hover:bg-brand-accentDark">
+            <button
+              onClick={() => setShowForgotPassword(true)}
+              className="rounded-[6px] bg-brand-accent px-4 py-1.5 font-medium text-[var(--brand-button-text)] hover:bg-brand-accentDark"
+            >
               忘記密碼
             </button>
           </div>
@@ -311,6 +320,8 @@ export default function TopBar({ images }: Props) {
       />
 
       <MessageCenterModal open={showMessageCentre} onClose={() => setShowMessageCentre(false)} />
+
+      <ForgotPasswordModal open={showForgotPassword} onClose={() => setShowForgotPassword(false)} />
     </div>
   );
 }

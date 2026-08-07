@@ -48,6 +48,8 @@ export const IMAGE_SLOTS: ImageSlot[] = [
 
   { id: "invite-friends-banner", label: "會員中心 - 邀請好友 滿版banner圖", category: "banner", width: 1000, height: 360 },
 
+  { id: "register-bg", label: "免費註冊頁面 - 背景圖", category: "banner", width: 1600, height: 900 },
+
   // Popup banners shown when clicking the promo-grid cards that open an
   // activity-detail popup (首儲二選一/你跳槽我出資/每日簽到活動 — matches
   // pc.wu88.live's real iframe-promotions popups).
