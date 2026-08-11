@@ -55,8 +55,14 @@ export default function MobileCategoryExplorer({ images, positions }: Props) {
 
   return (
     <div className="flex flex-1 overflow-hidden bg-white">
-      {/* Left rail */}
-      <div className="no-scrollbar flex w-16 flex-shrink-0 flex-col gap-2 overflow-y-auto bg-white px-1.5 py-2">
+      {/* Left rail — every value below (item box 65x66px, 13px radius, 6px
+          gap between items, #ffecdc fill on EVERY item not just the active
+          one, active-only 1px #c15e27 border, label always #414141/700/14px
+          regardless of active state — the real site never recolors or
+          rebolds the label, only the border appears and the icon grows)
+          confirmed live against wu88.live's real `.home-game-list` /
+          `.btn_GL` rail via getComputedStyle + getBoundingClientRect. */}
+      <div className="no-scrollbar flex w-[73px] flex-shrink-0 flex-col gap-[6px] overflow-y-auto bg-white px-2 py-2">
         {navCategories.map((cat) => {
           const active = cat.key === activeCategory?.key;
           const iconSrc = active
@@ -66,10 +72,8 @@ export default function MobileCategoryExplorer({ images, positions }: Props) {
             <button
               key={cat.key}
               onClick={() => setActiveKey(cat.key)}
-              className={`flex flex-col items-center gap-1 rounded-xl border-2 bg-[#ffecdc] px-1 py-2.5 text-[11px] transition-colors ${
-                active
-                  ? "border-red-500 font-semibold text-brand-accent"
-                  : "border-transparent text-neutral-600"
+              className={`flex h-[66px] w-[65px] flex-shrink-0 flex-col items-center justify-center gap-1 rounded-[13px] border bg-[#ffecdc] text-[14px] font-bold text-[#414141] transition-colors ${
+                active ? "border-[#c15e27]" : "border-transparent"
               }`}
             >
               {iconSrc ? (

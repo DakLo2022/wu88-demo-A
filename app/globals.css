@@ -32,16 +32,31 @@ body {
   box-sizing: border-box;
 }
 
+/* Marquee track always renders TWO back-to-back copies of the announcement
+   text (see AnnouncementTicker.tsx / MobileHeroBanner.tsx) specifically so
+   this animation can loop seamlessly: 0% shows the first copy sitting at
+   its natural position (fully visible immediately, no blank wait on page
+   load), and -50% shifts left by exactly one copy's width, landing the
+   second (identical) copy exactly where the first one started — so the
+   loop back to 0% is imperceptible, with zero blank frames ever.
+   Previously this started at translateX(100%) (the whole double-width
+   track pushed off-screen to the right) and ended at translateX(-100%),
+   which is wrong for a 2-copy track: it created a multi-second blank gap
+   at the start (confirmed live via pc.wu88.live's real marquee, which
+   starts at translateX(0) with content immediately visible) before any
+   text scrolled into view — the bug behind the "announcement takes ~8s to
+   appear" report. Duration matched to the real site's own marquee
+   animation (20.5s linear infinite, confirmed via getComputedStyle). */
 .marquee-track {
-  animation: marquee 26s linear infinite;
+  animation: marquee 20.5s linear infinite;
 }
 
 @keyframes marquee {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 

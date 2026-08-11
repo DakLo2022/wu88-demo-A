@@ -1133,5 +1133,290 @@
     "x": 0,
     "y": 0,
     "scale": 1
+  },
+  "mobile-login-bg__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-wallet-refresh-icon__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-login-cs-icon__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-header-wallet-arrow__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-wallet-category-arrow__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "topbar-mail-icon__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-tab-home-icon__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-promo-1__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-promo-2__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-promo-3__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-promo-4__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-promo-5__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-trade-empty-illustration": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-service-banner-3__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-service-banner-1__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-service-client-banner__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-service-banner-2__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-service-background__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-service-client-background__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-profile-bg__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-refresh-icon__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-bell-icon__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-deposit__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-consign__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-wallet__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-bind-account__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-account-detail__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-member-info__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-bet-bonus__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-invite__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-security__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-help__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-list-chevron__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-my-icon-logout__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-invite-banner__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-bet-bonus-banner__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-1__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-2__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-3__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-4__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-5__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-usdt-6__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-1__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-2__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-3__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-4__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-5__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-6__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-7__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-8__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-9__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-10__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-11__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-12__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-13__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-14__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "help-taiwan-pay-15__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
   }
 }

@@ -50,6 +50,8 @@ export const IMAGE_SLOTS: ImageSlot[] = [
 
   { id: "register-bg", label: "免費註冊頁面 - 背景圖", category: "banner", width: 1600, height: 900 },
 
+  { id: "mobile-login-bg", label: "手機版 登入/註冊/忘記密碼頁 - 背景圖", category: "banner", width: 414, height: 896 },
+
   // Popup banners shown when clicking the promo-grid cards that open an
   // activity-detail popup (首儲二選一/你跳槽我出資/每日簽到活動 — matches
   // pc.wu88.live's real iframe-promotions popups).
@@ -77,6 +79,69 @@ export const IMAGE_SLOTS: ImageSlot[] = [
   { id: "sidedock-mail", label: "側邊信箱 Icon", category: "icon", width: 32, height: 32 },
   { id: "sidedock-app", label: "側邊 APP 下載 Icon", category: "icon", width: 32, height: 32 },
   { id: "sidedock-cs-right", label: "右側客服圓形按鈕 Icon", category: "icon", width: 36, height: 36 },
+
+  { id: "mobile-header-wallet-arrow", label: "手機版導覽列 - 錢包選單 下拉箭頭 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-wallet-refresh-icon", label: "手機版錢包彈窗 - 刷新 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-wallet-category-arrow", label: "手機版錢包彈窗 - 全部錢包 下拉箭頭 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-login-cs-icon", label: "手機版登入/註冊頁 - 客服中心 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-trade-date-icon", label: "手機版帳務頁 - 日期範圍 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-trade-type-arrow", label: "手機版帳務頁 - 選擇類型 下拉箭頭 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-trade-empty-illustration", label: "手機版帳務頁 - 無資料插圖", category: "banner", width: 200, height: 200 },
+  { id: "mobile-trade-checkbox-check-icon", label: "手機版帳務頁 - 選擇類型 打勾 Icon", category: "icon", width: 14, height: 14 },
+  { id: "mobile-back-arrow-icon", label: "手機版子頁面共用 - 返回箭頭 Icon（優惠列表/活動內容/帳務頁/服務頁）", category: "icon", width: 20, height: 20 },
+  { id: "mobile-promotions-favorite-icon", label: "手機版優惠頁 - 收藏 Icon", category: "icon", width: 20, height: 20 },
+
+  { id: "mobile-service-banner-1", label: "手機版服務頁 - Banner 1（武財神線上影城）", category: "banner", width: 780, height: 268 },
+  { id: "mobile-service-banner-2", label: "手機版服務頁 - Banner 2（武財神真人客服）", category: "banner", width: 780, height: 268 },
+  { id: "mobile-service-banner-3", label: "手機版服務頁 - Banner 3（武財神線上商城）", category: "banner", width: 780, height: 268 },
+  { id: "mobile-service-client-banner", label: "手機版客服中心頁 - 頂部插圖（24hr真人客服）", category: "banner", width: 700, height: 400 },
+  { id: "mobile-service-icon-online", label: "手機版客服中心頁 - 在線客服 Icon", category: "icon", width: 24, height: 24 },
+  { id: "mobile-service-icon-line", label: "手機版客服中心頁 - Line客服 Icon", category: "icon", width: 24, height: 24 },
+  { id: "mobile-service-icon-email", label: "手機版客服中心頁 - 電子信箱 Icon", category: "icon", width: 24, height: 24 },
+  { id: "mobile-service-background", label: "手機版服務頁 - 背景圖", category: "banner", width: 750, height: 1624 },
+  { id: "mobile-service-client-background", label: "手機版客服中心頁 - 背景圖", category: "banner", width: 750, height: 1624 },
+
+  { id: "mobile-my-bell-icon", label: "手機版我的頁 - 導覽列通知鈴鐺 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-profile-bg", label: "手機版我的頁 - 會員卡背景圖", category: "banner", width: 768, height: 400 },
+  { id: "mobile-my-tier-badge-current", label: "手機版我的頁 - 目前等級徽章圖示（銅）", category: "icon", width: 72, height: 80 },
+  { id: "mobile-my-tier-badge-next", label: "手機版我的頁 - 下一等級徽章圖示（銀）", category: "icon", width: 72, height: 80 },
+  { id: "mobile-my-refresh-icon", label: "手機版我的頁 - 時間列刷新 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-my-icon-deposit", label: "手機版我的頁 - 儲值 Icon", category: "icon", width: 24, height: 24 },
+  { id: "mobile-my-icon-consign", label: "手機版我的頁 - 託售 Icon", category: "icon", width: 24, height: 24 },
+  { id: "mobile-my-icon-wallet", label: "手機版我的頁 - 錢包 Icon", category: "icon", width: 24, height: 24 },
+  { id: "mobile-my-icon-bind-account", label: "手機版我的頁 - 綁定帳戶 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-account-detail", label: "手機版我的頁 - 帳戶明細 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-member-info", label: "手機版我的頁 - 會員資料 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-bet-bonus", label: "手機版我的頁 - 投注彩金 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-invite", label: "手機版我的頁 - 邀請好友 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-security", label: "手機版我的頁 - 安全中心 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-help", label: "手機版我的頁 - 協助中心 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-list-chevron", label: "手機版我的頁 - 下拉選單箭頭 Icon（帳戶明細/會員資料/協助中心）", category: "icon", width: 20, height: 20 },
+  { id: "mobile-my-icon-logout", label: "手機版我的頁 - 登出 Icon", category: "icon", width: 20, height: 20 },
+
+  // 會員等級 (/my/vip-level) — confirmed live this is its own distinct mobile
+  // page (AWD, not a shrunk-down copy of the desktop 會員等級 tab): the hero
+  // section's orange background is literally a decorative PNG on the real
+  // site (wu88.live's Ellipse42.png), not a CSS gradient, so it gets its own
+  // upload slot with a gradient fallback like every other decorative
+  // background in this project.
+  { id: "mobile-vip-hero-bg", label: "手機版會員等級頁 - 頂部橘色裝飾背景圖", category: "banner", width: 750, height: 420 },
+
+  // 邀請好友 (/my/invite) — confirmed live this has its own real mobile
+  // layout (share-link card, QR code, stats) below a marketing banner, not
+  // just a single full-page image like the desktop InviteFriendsTab. The
+  // banner itself (mascot/coin artwork) is the real site's own copyrighted
+  // art, so — same as every other marketing banner in this project — it
+  // gets its own upload slot instead of being reproduced.
+  { id: "mobile-invite-banner", label: "手機版邀請好友頁 - 頂部橫幅圖（邀請好友領雙重好禮）", category: "banner", width: 750, height: 460 },
+
+  // 投注彩金 (/my/bet-bonus) — confirmed live at wu88.live/betting_winnings
+  // to be a dark-themed page with its own festive "每日簽到禮" gift-box/coin
+  // marketing banner (own copyrighted art, own upload slot like every other
+  // banner here) sitting above a black page body — a completely different
+  // look from the plain white desktop BettingBonusTab this page used to be
+  // built from.
+  { id: "mobile-bet-bonus-banner", label: "手機版投注彩金頁 - 頂部橫幅圖（每日簽到禮）", category: "banner", width: 750, height: 380 },
 
   // Footer vendor/partner logo strip. Upload as many as needed — the
   // footer only renders the ones that actually have a file uploaded.
@@ -208,9 +273,40 @@ export const MOBILE_TAB_SLOTS: ImageSlot[] = [
     width: 28,
     height: 28,
   },
+  // The first tab slot swaps from 優惠 to 首頁 (icon AND label) whenever the
+  // visitor is actually on the 優惠 list/detail pages — confirmed live on
+  // wu88.live/activity/, where the bottom bar's first icon changes to a
+  // house and its label to "首頁" so there's still a way back to the
+  // homepage. Gets its own dedicated slot rather than reusing the 優惠 one
+  // since it's a genuinely different icon (house vs. gift box).
+  {
+    id: mobileTabIconSlotId("home"),
+    label: "手機版底部選單 - 首頁 圖示（在優惠頁時取代「優惠」按鈕）",
+    category: "icon" as const,
+    width: 28,
+    height: 28,
+  },
 ];
 
 IMAGE_SLOTS.push(...MOBILE_TAB_SLOTS);
+
+/** Slot id for the Nth 優惠 (promotions) list-page banner card — same image
+ * is reused as the detail page's header banner when that card is tapped. */
+export function mobilePromoBannerSlotId(id: string): string {
+  return `mobile-promo-${id}`;
+}
+
+export const MOBILE_PROMO_IDS = ["1", "2", "3", "4", "5"] as const;
+
+export const MOBILE_PROMO_SLOTS: ImageSlot[] = MOBILE_PROMO_IDS.map((id, idx) => ({
+  id: mobilePromoBannerSlotId(id),
+  label: `手機版 優惠頁 - 活動卡片 ${idx + 1} Banner`,
+  category: "banner" as const,
+  width: 780,
+  height: 300,
+}));
+
+IMAGE_SLOTS.push(...MOBILE_PROMO_SLOTS);
 
 /** Slot id for step N of one of the 協助中心 (Help Center) step-by-step
  * screenshot tutorials. The real site's 超商搜尋流程/USDT儲值流程/支付寶儲值流程
@@ -229,6 +325,11 @@ const HELP_CENTER_FLOWS: { flow: string; label: string; count: number; width: nu
   { flow: "usdt", label: "協助中心 - USDT儲值流程", count: 6, width: 820, height: 420 },
   { flow: "alipay-register", label: "協助中心 - 支付寶儲值流程（註冊流程）", count: 13, width: 320, height: 600 },
   { flow: "alipay-deposit", label: "協助中心 - 支付寶儲值流程（儲值流程）", count: 2, width: 320, height: 600 },
+  // 手機版我的頁 - 協助中心 - 雲支付綁定流程 (confirmed live at
+  // /taiwan_pay_illustrate: 15-step phone-screenshot tutorial, "X / Y"
+  // counter-style pagination — same shared TutorialSteps viewer pattern as
+  // the other flows above).
+  { flow: "taiwan-pay", label: "協助中心 - 雲支付綁定流程", count: 15, width: 320, height: 600 },
 ];
 
 export const HELP_CENTER_SLOTS: ImageSlot[] = HELP_CENTER_FLOWS.flatMap(({ flow, label, count, width, height }) =>

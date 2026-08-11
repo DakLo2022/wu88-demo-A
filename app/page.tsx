@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import TopBar from "@/components/TopBar";
 import Navbar from "@/components/Navbar";
 import SideDock from "@/components/SideDock";
@@ -44,7 +45,13 @@ export default function HomePage() {
       {/* Mobile (below md) — single-screen app shell, no page scroll; only
           the category explorer's two columns scroll internally. */}
       <div className="flex h-[100dvh] flex-col overflow-hidden md:hidden">
-        <MobileHeader images={images} />
+        {/* MobileHeader reads useSearchParams() (to detect the `?loggedIn=1`
+            redirect from the fake login/register flow), which Next.js
+            requires to be wrapped in Suspense so the rest of the page can
+            still be statically rendered. */}
+        <Suspense fallback={null}>
+          <MobileHeader images={images} />
+        </Suspense>
         <MobileHeroBanner images={images} positions={positions} />
         <MobileCategoryExplorer images={images} positions={positions} />
         <MobileBottomNav images={images} />

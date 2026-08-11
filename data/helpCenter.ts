@@ -127,3 +127,7 @@ export const STORE_SEARCH_FAMILY_FLOW: TutorialFlow = { flow: "storesearch-famil
 export const USDT_DEPOSIT_FLOW: TutorialFlow = { flow: "usdt", count: 6, pagination: "dots" };
 export const ALIPAY_REGISTER_FLOW: TutorialFlow = { flow: "alipay-register", count: 13, pagination: "counter" };
 export const ALIPAY_DEPOSIT_FLOW: TutorialFlow = { flow: "alipay-deposit", count: 2, pagination: "counter" };
+// 雲支付綁定流程 — confirmed live at wu88.live's /taiwan_pay_illustrate: a
+// 15-step phone-screenshot tutorial using the "X / Y" counter pagination
+// style (same as the Alipay flows above).
+export const TAIWAN_PAY_FLOW: TutorialFlow = { flow: "taiwan-pay", count: 15, pagination: "counter" };
