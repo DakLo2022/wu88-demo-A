@@ -223,13 +223,12 @@ export default function MobileTradeScreen({ images }: Props) {
       >
         {emptyIllustrationSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={emptyIllustrationSrc} alt="" className="h-[160px] w-[160px] object-contain opacity-80" />
+          <img src={emptyIllustrationSrc} alt="" className="h-auto w-[300px] object-contain opacity-80" />
         ) : (
           <span aria-hidden className="text-6xl opacity-60">
             📭
           </span>
         )}
-        <p className="mt-3 text-[14px] tracking-widest text-black/40">暫無相關資料</p>
       </div>
 
       <MobileBottomNav images={images} />

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { mobileSlotKey } from "@/lib/imageTransform";
+import { useLoggedIn } from "@/lib/useLoggedIn";
 import MobileWalletPanel from "./MobileWalletPanel";
 
 type Props = {
@@ -20,14 +21,15 @@ type Props = {
 //     via getComputedStyle/getBoundingClientRect against the real
 //     `.home_header` while signed in, not guessed from the desktop TopBar's
 //     very different logged-in layout.
-// This demo has no real backend/session, so `loggedIn` is just local state
-// (same "fake auth" convention as the desktop TopBar's own `loggedIn`
-// state) — MobileAuthCard's fake login/register redirects back here with
-// `?loggedIn=1` so the state is actually reachable by using the site, not
-// just a hidden toggle.
+// This demo has no real backend/session, so `loggedIn` is persisted to
+// localStorage via useLoggedIn() (same "fake auth" convention as the
+// desktop TopBar's own `loggedIn` state, just shared across pages now —
+// see lib/useLoggedIn.ts for why) — MobileAuthCard's fake login/register
+// redirects back here with `?loggedIn=1` so the state is actually reachable
+// by using the site, not just a hidden toggle.
 export default function MobileHeader({ images }: Props) {
   const searchParams = useSearchParams();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useLoggedIn();
   const [showWallet, setShowWallet] = useState(false);
 
   useEffect(() => {

@@ -170,9 +170,9 @@ const MENU_ROWS: MenuRow[] = [
 ];
 
 const QUICK_ACTIONS = [
-  { label: "儲值", iconSlot: "mobile-my-icon-deposit", fallbackEmoji: "💰" },
-  { label: "託售", iconSlot: "mobile-my-icon-consign", fallbackEmoji: "📤" },
-  { label: "錢包", iconSlot: "mobile-my-icon-wallet", fallbackEmoji: "👛" },
+  { label: "儲值", href: "/deposit", iconSlot: "mobile-my-icon-deposit", fallbackEmoji: "💰" },
+  { label: "託售", href: "/withdrawal", iconSlot: "mobile-my-icon-consign", fallbackEmoji: "📤" },
+  { label: "錢包", href: "/transfer", iconSlot: "mobile-my-icon-wallet", fallbackEmoji: "👛" },
 ];
 
 // 我的 (My/profile) page — reached from the bottom tab bar's 我 button.
@@ -318,7 +318,7 @@ export default function MobileMyScreen({ images }: Props) {
             {QUICK_ACTIONS.map((action) => {
               const src = pickImage(images, action.iconSlot);
               return (
-                <button key={action.label} type="button" className="flex flex-col items-center gap-1.5 text-[13px] text-black/80">
+                <Link key={action.label} href={action.href} className="flex flex-col items-center gap-1.5 text-[13px] text-black/80">
                   {src ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={src} alt="" className="h-6 w-6 object-contain" />
@@ -326,7 +326,7 @@ export default function MobileMyScreen({ images }: Props) {
                     <span className="text-2xl leading-none">{action.fallbackEmoji}</span>
                   )}
                   {action.label}
-                </button>
+                </Link>
               );
             })}
           </div>

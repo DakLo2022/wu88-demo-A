@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { mobileSlotKey } from "@/lib/imageTransform";
 import { MOBILE_TAB_ITEMS, MOBILE_TAB_CENTER_ID, mobileTabIconSlotId } from "@/lib/imageSlots";
+import { useLoggedIn } from "@/lib/useLoggedIn";
+import LoginRequiredModal from "./LoginRequiredModal";
 
 type Props = {
   images: Record<string, string | null>;
@@ -16,6 +19,14 @@ const TAB_HREF: Record<string, string> = {
   service: "/service",
   member: "/my",
 };
+
+// Confirmed live on wu88.live (logged out, in a fresh tab that lost its
+// session): tapping 帳務, 存提, or 我的 while signed out never navigates —
+// it pops a SweetAlert2 "提醒您 / 請先登入" alert instead (see
+// LoginRequiredModal.tsx), and only sends the visitor to /user-login once
+// they tap 關閉. 優惠/首頁/服務 are NOT gated this way — confirmed live
+// those stay reachable while signed out.
+const GATED_TAB_IDS = new Set(["billing", "member"]);
 
 // Looks up a slot's image, preferring whichever was actually uploaded: the
 // mobile-specific one (uploaded via the "手機" tab in /image-manager) or the
@@ -47,6 +58,21 @@ const PROMO_TAB = MOBILE_TAB_ITEMS[0];
 const TABS_MIDDLE_LEFT = MOBILE_TAB_ITEMS.slice(1, 2);
 const TABS_RIGHT = MOBILE_TAB_ITEMS.slice(2);
 
+// The 3 options that pop up above the bottom nav when 存提 is tapped —
+// confirmed live on wu88.live: tapping the center 存提 button opens a
+// v-dialog holding exactly these 3 buttons (轉點→/transfer, 儲值→/deposit,
+// 託售→/withdrawal), each a 90×54 pill with a pink→maroon... no — confirmed
+// via getComputedStyle this is an ORANGE gradient
+// linear-gradient(#f87a19,#f84c00) (NOT the login/wallet buttons' pink one),
+// 10px radius, white 36×31 icon over an 11px white label, evenly spaced
+// inside a translucent white card (bg rgba(255,255,255,.7), 1px
+// #e1e2e2 border, 10px radius) that floats just above the nav.
+const DW_MENU_ITEMS = [
+  { label: "轉點", href: "/transfer", iconSlot: "mobile-dw-menu-icon-transfer", fallbackEmoji: "💱" },
+  { label: "儲值", href: "/deposit", iconSlot: "mobile-dw-menu-icon-deposit", fallbackEmoji: "⬇️" },
+  { label: "託售", href: "/withdrawal", iconSlot: "mobile-dw-menu-icon-withdrawal", fallbackEmoji: "⬆️" },
+] as const;
+
 // Fixed mobile bottom tab bar — same gradient as the TopBar, with a raised
 // circular logo button ("存提") floating above the center, matching
 // wu88.live's app-shell footer. All 5 columns (2 left + center + 2 right)
@@ -57,6 +83,9 @@ const TABS_RIGHT = MOBILE_TAB_ITEMS.slice(2);
 // being pinned separately, which is what caused it to sit off-baseline.
 export default function MobileBottomNav({ images }: Props) {
   const pathname = usePathname();
+  const [loggedIn] = useLoggedIn();
+  const [showDwMenu, setShowDwMenu] = useState(false);
+  const [showLoginRequired, setShowLoginRequired] = useState(false);
   // The real site uses live Vue-router `router-link-active` classes to
   // decide both of these — reproduced here with usePathname() instead of a
   // prop, so every page automatically gets the right state just by being at
@@ -107,6 +136,19 @@ export default function MobileBottomNav({ images }: Props) {
       </>
     );
 
+    if (href && GATED_TAB_IDS.has(tab.id) && !loggedIn) {
+      return (
+        <button
+          key={tab.id}
+          type="button"
+          onClick={() => setShowLoginRequired(true)}
+          className="flex flex-1 flex-col items-center justify-end gap-0.5 pb-2"
+        >
+          {content}
+        </button>
+      );
+    }
+
     if (href) {
       return (
         <Link key={tab.id} href={href} className="flex flex-1 flex-col items-center justify-end gap-0.5 pb-2">
@@ -154,8 +196,11 @@ export default function MobileBottomNav({ images }: Props) {
           anchored to the same pb-2 baseline as the other four columns. */}
       <div className="relative flex flex-1 flex-col items-center justify-end gap-0.5 pb-2">
         <button
+          type="button"
+          onClick={() => (loggedIn ? setShowDwMenu((v) => !v) : setShowLoginRequired(true))}
           className="absolute left-1/2 top-0 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-white bg-white shadow-[0_4px_10px_rgba(0,0,0,0.25),0_0_0_3px_var(--brand-accent)]"
           aria-label="存提"
+          aria-expanded={showDwMenu}
         >
           {centerIconSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -168,6 +213,54 @@ export default function MobileBottomNav({ images }: Props) {
       </div>
 
       {TABS_RIGHT.map(renderTab)}
+
+      {showDwMenu ? (
+        <>
+          {/* Re-checked live: the real site DOES dim the page behind this
+              popup — a Vuetify `.v-overlay__scrim`, confirmed via
+              getComputedStyle at rgb(33,33,33) / opacity 0.46 — an earlier
+              pass here missed it (screenshot JPEG at tiny size made the dim
+              layer hard to see) and wrongly built this as an invisible
+              tap-to-close layer. */}
+          <button
+            type="button"
+            aria-label="關閉存提選單"
+            onClick={() => setShowDwMenu(false)}
+            className="fixed inset-0 z-[89] cursor-default bg-[#212121]/45"
+          />
+          <div className="absolute bottom-full left-1/2 z-[90] mb-2 w-[calc(100%-20px)] max-w-[382px] -translate-x-1/2 rounded-[10px] border border-[#e1e2e2] bg-white/70 px-2 py-0 backdrop-blur-sm">
+            <div className="flex items-center justify-around">
+              {DW_MENU_ITEMS.map((item) => {
+                const iconSrc = pickImage(images, item.iconSlot);
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setShowDwMenu(false)}
+                    className="my-[9.5px] flex h-[54px] w-[90px] flex-row items-center justify-center gap-1 rounded-[10px] bg-gradient-to-b from-[#f87a19] to-[#f84c00] text-white"
+                  >
+                    {/* Re-checked live: the real button lays out icon LEFT
+                        of label (flex-row, both vertically centered), not
+                        icon-above-label like an earlier pass here built —
+                        confirmed via each element's own getBoundingClientRect:
+                        icon x 175–211, label x 216–238, same vertical
+                        center. */}
+                    {iconSrc ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={iconSrc} alt="" className="h-[24px] w-[28px] object-contain" />
+                    ) : (
+                      <span className="text-xl leading-none">{item.fallbackEmoji}</span>
+                    )}
+                    <span className="text-[11px] leading-none text-white">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      ) : null}
+
+      {showLoginRequired ? <LoginRequiredModal onClose={() => setShowLoginRequired(false)} /> : null}
     </nav>
   );
 }

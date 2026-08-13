@@ -91,6 +91,29 @@ export const IMAGE_SLOTS: ImageSlot[] = [
   { id: "mobile-back-arrow-icon", label: "手機版子頁面共用 - 返回箭頭 Icon（優惠列表/活動內容/帳務頁/服務頁）", category: "icon", width: 20, height: 20 },
   { id: "mobile-promotions-favorite-icon", label: "手機版優惠頁 - 收藏 Icon", category: "icon", width: 20, height: 20 },
 
+  // 存提彈出選單（首頁底部導覽列「存提」按鈕點擊後浮現的 3 個橘色圓角按鈕）
+  { id: "mobile-dw-menu-icon-transfer", label: "手機版存提彈出選單 - 轉點 Icon", category: "icon", width: 36, height: 32 },
+  { id: "mobile-dw-menu-icon-deposit", label: "手機版存提彈出選單 - 儲值 Icon", category: "icon", width: 36, height: 32 },
+  { id: "mobile-dw-menu-icon-withdrawal", label: "手機版存提彈出選單 - 託售 Icon", category: "icon", width: 36, height: 32 },
+
+  // 額度轉換 (/transfer) 與 託售 (/withdrawal) 共用的錢包格線
+  { id: "mobile-wallet-grid-refresh-icon", label: "手機版轉點/託售頁 - 錢包金額 刷新 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-wallet-grid-category-arrow", label: "手機版轉點/託售頁 - 全部錢包 下拉箭頭 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-wallet-grid-expand-arrow", label: "手機版轉點/託售頁 - 展開/收起 箭頭 Icon", category: "icon", width: 16, height: 16 },
+
+  // 額度轉換 (/transfer) 專屬
+  { id: "mobile-transfer-swap-icon", label: "手機版轉點頁 - 轉出/轉入 交換 Icon", category: "icon", width: 20, height: 20 },
+  { id: "mobile-transfer-select-arrow", label: "手機版轉點頁 - 轉出/轉入錢包 下拉箭頭 Icon", category: "icon", width: 16, height: 16 },
+
+  // 儲值 (/deposit) 專屬
+  { id: "mobile-deposit-method-bank-icon", label: "手機版儲值頁 - 銀行轉點(第三方) Icon", category: "icon", width: 32, height: 32 },
+  { id: "mobile-deposit-method-usdt-icon", label: "手機版儲值頁 - USDT Icon", category: "icon", width: 32, height: 32 },
+
+  // 託售 (/withdrawal) 專屬
+  { id: "mobile-withdrawal-method-bank-icon", label: "手機版託售頁 - 銀行卡 Icon", category: "icon", width: 32, height: 32 },
+  { id: "mobile-withdrawal-card-check-icon", label: "手機版託售頁 - 已選銀行卡 打勾 Icon", category: "icon", width: 16, height: 16 },
+  { id: "mobile-withdrawal-add-icon", label: "手機版託售頁 - 新增銀行卡 Icon", category: "icon", width: 16, height: 16 },
+
   { id: "mobile-service-banner-1", label: "手機版服務頁 - Banner 1（武財神線上影城）", category: "banner", width: 780, height: 268 },
   { id: "mobile-service-banner-2", label: "手機版服務頁 - Banner 2（武財神真人客服）", category: "banner", width: 780, height: 268 },
   { id: "mobile-service-banner-3", label: "手機版服務頁 - Banner 3（武財神線上商城）", category: "banner", width: 780, height: 268 },

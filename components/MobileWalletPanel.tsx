@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { mobileSlotKey } from "@/lib/imageTransform";
+import { WALLET_CATEGORIES, SUB_WALLETS } from "@/data/mobileWallets";
 
 // Prefers whichever was actually uploaded — the mobile-specific image
 // (stored under the "__mobile" key when uploaded via the "手機" tab in
@@ -41,73 +42,11 @@ function pickImage(images: Record<string, string | null>, slotId: string): strin
 // color at 0.12 opacity, i.e. exactly "淺橘色包裹、橘色字體". Built as a
 // custom dropdown here (not a native <select>) since that per-option wash
 // styling isn't achievable with native <option> elements.
-const WALLET_CATEGORIES = [
-  "全部錢包",
-  "體育投注",
-  "真人遊戲",
-  "電子遊戲",
-  "彩票投注",
-  "棋牌遊戲",
-  "電競投注",
-  "直播視訊",
-];
-
-// Each wallet's real category — confirmed live by selecting every one of
-// the 7 category filters on wu88.live's actual dropdown and recording which
-// wallets appeared each time (NOT guessed from the wallet's own name: e.g.
-// Super錢包/AP錢包 have no "體育" in their name but are genuinely 體育投注
-// wallets on the real site, and 武財神電子/真人錢包 — despite the "真人" in
-// its own name — only ever showed up under 電子遊戲, never under 真人遊戲).
-// 直播視訊 had zero wallets under it on the real site too, so that filter
-// legitimately renders an empty list here as well.
-const SUB_WALLETS: { name: string; category: string }[] = [
-  { name: "Super錢包", category: "體育投注" },
-  { name: "WG體育錢包", category: "體育投注" },
-  { name: "AP錢包", category: "體育投注" },
-  { name: "熊貓體育錢包", category: "體育投注" },
-  { name: "Live體育錢包", category: "體育投注" },
-  { name: "天群體育錢包", category: "體育投注" },
-  { name: "MT體育錢包", category: "體育投注" },
-
-  { name: "DG錢包", category: "真人遊戲" },
-  { name: "歐博真人錢包", category: "真人遊戲" },
-  { name: "WG真人/彩球", category: "真人遊戲" },
-  { name: "Astar錢包", category: "真人遊戲" },
-  { name: "WM錢包", category: "真人遊戲" },
-  { name: "MT真人錢包", category: "真人遊戲" },
-  { name: "DB真人錢包", category: "真人遊戲" },
-  { name: "T9真人錢包", category: "真人遊戲" },
-  { name: "金佰新錢包", category: "真人遊戲" },
-
-  { name: "Gemini錢包", category: "電子遊戲" },
-  { name: "ATG電子錢包", category: "電子遊戲" },
-  { name: "武財神電子/真人錢包", category: "電子遊戲" },
-  { name: "Ask電子錢包", category: "電子遊戲" },
-  { name: "RSG錢包", category: "電子遊戲" },
-  { name: "BNG錢包", category: "電子遊戲" },
-  { name: "ZG錢包", category: "電子遊戲" },
-  { name: "GB錢包", category: "電子遊戲" },
-  { name: "QTech錢包", category: "電子遊戲" },
-  { name: "RK5電子錢包", category: "電子遊戲" },
-  { name: "SPlus電子錢包", category: "電子遊戲" },
-  { name: "Tag電子錢包", category: "電子遊戲" },
-  { name: "Hacksaw電子錢包", category: "電子遊戲" },
-  { name: "Slotmill電子錢包", category: "電子遊戲" },
-  { name: "AT電子錢包", category: "電子遊戲" },
-  { name: "T9電子錢包", category: "電子遊戲" },
-
-  { name: "9K錢包", category: "彩票投注" },
-  { name: "DB彩票錢包", category: "彩票投注" },
-  { name: "GPT彩票錢包", category: "彩票投注" },
-
-  { name: "好路錢包", category: "棋牌遊戲" },
-  { name: "開心錢包", category: "棋牌遊戲" },
-  { name: "高登錢包", category: "棋牌遊戲" },
-
-  { name: "雷火錢包", category: "電競投注" },
-
-  // 直播視訊 genuinely has no wallets under it on the real site.
-];
+// WALLET_CATEGORIES and SUB_WALLETS now live in data/mobileWallets.ts,
+// shared with the /transfer and /withdrawal pages' own wallet grid
+// (MobileWalletGrid.tsx), which reuse this exact same live-verified
+// category mapping (also fixed a missing "SA真人錢包" 真人遊戲 entry that
+// this file's own earlier inline copy had dropped).
 
 type Props = {
   open: boolean;

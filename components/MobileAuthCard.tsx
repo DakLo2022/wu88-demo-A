@@ -194,11 +194,27 @@ export default function MobileAuthCard({ images }: Props) {
 
       {/* 客服中心 pill, pinned top-right — decorative only in this demo (no
           live chat widget to wire up), matches the real site's position/
-          style exactly (bg black/75, 34px radius, white 13px text). */}
+          style exactly (bg black/75, 34px radius, white 13px text). Icon is
+          CSS-mask recolored to solid white (same trick as the password
+          eye-toggle icon below) rather than rendered in its uploaded file's
+          own colors, since this project only has one shared upload slot per
+          icon and the real site's icon here is genuinely white. */}
       <div className="absolute right-5 top-[25px] z-10 flex items-center gap-1.5 rounded-[34px] bg-black/75 px-4 py-2 text-white">
         {csIconSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={csIconSrc} alt="" className="h-4 w-4 object-contain" />
+          <span
+            aria-hidden
+            className="block h-4 w-4 bg-white"
+            style={{
+              WebkitMaskImage: `url(${csIconSrc})`,
+              maskImage: `url(${csIconSrc})`,
+              WebkitMaskSize: "contain",
+              maskSize: "contain",
+              WebkitMaskRepeat: "no-repeat",
+              maskRepeat: "no-repeat",
+              WebkitMaskPosition: "center",
+              maskPosition: "center",
+            }}
+          />
         ) : (
           <span className="text-sm leading-none" aria-hidden>
             🎧

@@ -1418,5 +1418,25 @@
     "x": 0,
     "y": 0,
     "scale": 1
+  },
+  "mobile-service-banner-2": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-dw-menu-icon-transfer__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-dw-menu-icon-deposit__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
+  },
+  "mobile-dw-menu-icon-withdrawal__mobile": {
+    "x": 0,
+    "y": 0,
+    "scale": 1
   }
 }
