@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { heroSlides } from "@/data/promos";
+import { DESKTOP_PROMOTION_IDS } from "./DesktopPromotionsScreen";
 import { getImageTransformStyle, mobileSlotKey, DEFAULT_IMAGE_TRANSFORM, type ImageTransform } from "@/lib/imageTransform";
 
 type Props = {
@@ -13,6 +15,15 @@ type Props = {
 // always visible; mobile swaps in below `md` and falls back to the desktop
 // file until a mobile-specific one is uploaded in /image-manager) or a
 // decorative CSS-only placeholder if nothing has been uploaded yet.
+//
+// Clickable per explicit request ("桌面版，點擊banner時，點擊什麼活動就去
+// 什麼活動內容詳情"): these 4 slides are generic placeholder art with no
+// activity of their own (data/promos.ts's heroSlides are just "示範主視覺
+// 1-4"), so — same mechanical index mapping used for jin-demo's equivalent
+// banner — each slide links to the desktop 優惠活動 page's matching tab by
+// position: slide 1 → DESKTOP_PROMOTION_IDS[0], slide 2 → [1], etc. Both
+// arrays happen to have exactly 4 entries, so every slide maps to a real
+// activity with none left over.
 export default function HeroCarousel({ images, positions }: Props) {
   const [active, setActive] = useState(0);
 
@@ -32,10 +43,14 @@ export default function HeroCarousel({ images, positions }: Props) {
           const desktopTransform = positions[slide.slotId] ?? DEFAULT_IMAGE_TRANSFORM;
           const mobileTransform = positions[mobileSlotKey(slide.slotId)] ?? desktopTransform;
 
+          const linkedPromoId = DESKTOP_PROMOTION_IDS[idx % DESKTOP_PROMOTION_IDS.length];
+
           return (
-            <div
+            <Link
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-500 ${
+              href={`/promotions?id=${linkedPromoId}`}
+              aria-label={slide.title}
+              className={`absolute inset-0 block transition-opacity duration-500 ${
                 idx === active ? "opacity-100" : "pointer-events-none opacity-0"
               }`}
             >
@@ -69,7 +84,7 @@ export default function HeroCarousel({ images, positions }: Props) {
                   </div>
                 </div>
               )}
-            </div>
+            </Link>
           );
         })}
 

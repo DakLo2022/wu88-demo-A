@@ -321,9 +321,13 @@ export function mobilePromoBannerSlotId(id: string): string {
 
 export const MOBILE_PROMO_IDS = ["1", "2", "3", "4", "5"] as const;
 
+// Also used as the desktop 優惠活動 page's banner for the same activity
+// (confirmed live on pc.wu88.live/activity, 2026-08-14: the real desktop
+// banner is the same ~2.6:1 aspect ratio and recognizably the same artwork
+// as the mobile banner, just shown wider) — not a separate upload slot.
 export const MOBILE_PROMO_SLOTS: ImageSlot[] = MOBILE_PROMO_IDS.map((id, idx) => ({
   id: mobilePromoBannerSlotId(id),
-  label: `手機版 優惠頁 - 活動卡片 ${idx + 1} Banner`,
+  label: `優惠頁 - 活動卡片 ${idx + 1} Banner（手機版列表/詳情頁與桌面版優惠活動頁共用）`,
   category: "banner" as const,
   width: 780,
   height: 300,
